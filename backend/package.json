@@ -1,0 +1,10 @@
+{
+  "name": "morrow-backend-api",
+  "version": "1.0.0",
+  "description": "Morrow OTT Platform - AWS Lambda Backend API",
+  "type": "module",
+  "main": "index.mjs",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

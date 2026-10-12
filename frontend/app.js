@@ -373,7 +373,7 @@ const catalogueService = {
       const res = await fetch('/api/videos');
       if (res.ok) {
         const data = await res.json();
-        const list = Array.isArray(data) ? data : (data.videos || []);
+        const list = Array.isArray(data) ? data : (data.data || data.videos || []);
         if (list.length > 0) {
           MORROW_CATALOGUE.length = 0;
           MORROW_CATALOGUE.push(...list);

@@ -23,7 +23,8 @@ Thumbs.db
 *.swp
 *.swo
 
-# Temporary / Scratch Files
+# Build & Deployment Artifacts
+dist/
 scratch/
 .tmp/
 

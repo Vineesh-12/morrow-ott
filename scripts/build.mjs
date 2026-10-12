@@ -59,6 +59,12 @@ try {
   const s3Plan = generateS3UploadPlan();
   console.log(`   ✓ S3 upload plan verified (${s3Plan.totalFiles} candidate objects, ${s3Plan.totalFormatted}, 0 errors).`);
 
+  // Step 5: Build & Validate AWS Lambda Backend Deployment Package (Phase 4)
+  console.log('\n5. Building & Validating AWS Lambda Deployment Package (Phase 4)...');
+  const { packageLambda } = await import('./package-lambda.mjs');
+  const lambdaPkg = packageLambda();
+  console.log(`   ✓ Lambda deployment package verified (${lambdaPkg.sizeKb} KB, ${lambdaPkg.fileCount} files, SHA-256: ${lambdaPkg.sha256.substring(0, 16)}...).`);
+
   console.log('\n======================================================');
   console.log('  Morrow OTT — Verification Build Completed Successfully');
   console.log('======================================================');

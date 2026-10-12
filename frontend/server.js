@@ -12,6 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normalizeCatalogue } from '../data/catalogue-adapter.js';
+import { handler as backendHandler } from '../backend/index.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,23 +53,45 @@ function getCanonicalCatalogue() {
 const server = http.createServer((req, res) => {
   const urlPath = req.url.split('?')[0];
 
-  // API Route: GET /api/health
-  if (urlPath === '/api/health' && req.method === 'GET') {
-    res.writeHead(200, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-    return res.end(JSON.stringify({ status: 'ok', service: 'morrow-catalogue-dev' }));
-  }
+  // Route API requests through the Phase 4 Lambda Backend Handler
+  if (urlPath.startsWith('/api/')) {
+    const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    const queryParams = {};
+    for (const [key, value] of urlObj.searchParams.entries()) {
+      queryParams[key] = value;
+    }
 
-  // API Route: GET /api/videos (reads canonical catalogue)
-  if (urlPath === '/api/videos' && req.method === 'GET') {
-    const videos = getCanonicalCatalogue();
-    res.writeHead(200, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+    const event = {
+      version: '2.0',
+      routeKey: `${req.method} ${urlPath}`,
+      rawPath: urlPath,
+      rawQueryString: urlObj.search.replace(/^\?/, ''),
+      headers: req.headers,
+      queryStringParameters: queryParams,
+      requestContext: {
+        http: {
+          method: req.method,
+          path: urlPath,
+          protocol: 'HTTP/1.1',
+          sourceIp: req.socket.remoteAddress || '127.0.0.1',
+          userAgent: req.headers['user-agent'] || 'local-dev'
+        },
+        requestId: `local-${Date.now()}`,
+        timeEpoch: Date.now()
+      }
+    };
+
+    backendHandler(event).then((lambdaResponse) => {
+      res.writeHead(lambdaResponse.statusCode, lambdaResponse.headers || {});
+      res.end(lambdaResponse.body || '');
+    }).catch((err) => {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: false,
+        error: { code: 'INTERNAL_SERVER_ERROR', message: err.message }
+      }));
     });
-    return res.end(JSON.stringify({ count: videos.length, videos }));
+    return;
   }
 
   // Static File Resolution
