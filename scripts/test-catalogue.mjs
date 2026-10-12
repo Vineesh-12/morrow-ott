@@ -152,6 +152,22 @@ assert(manifest.missingLocalCount === 0, 'No assets required for available title
 assert(manifest.plannedRemoteCount > 0, `Planned remote assets recorded for upcoming titles (Planned: ${manifest.plannedRemoteCount})`);
 
 // ----------------------------------------------------------------------------
+// Suite 4: Phase 3 S3 Asset Planning & Prefix Validation
+// ----------------------------------------------------------------------------
+console.log('\nSuite 4: S3 Asset Planning & Security Validation (Phase 3)');
+
+import { generateS3UploadPlan } from './s3-upload-plan.mjs';
+const s3Plan = generateS3UploadPlan();
+assert(s3Plan.totalFiles === 12, `S3 upload plan identifies exactly 12 destination objects (Found: ${s3Plan.totalFiles})`);
+assert(s3Plan.rejectedItems.length === 0, 'S3 upload plan contains zero rejected or invalid items');
+assert(s3Plan.candidates.every(c => s3Plan.approvedPrefixes.some(p => c.s3Key.startsWith(p))), 'Every candidate maps to an approved prefix (posters/, backdrops/, videos/, subtitles/)');
+assert(s3Plan.candidates.every(c => !c.s3Key.includes('..') && !c.s3Key.startsWith('/')), 'Zero path traversal or absolute keys detected in S3 candidate list');
+assert(s3Plan.candidates.filter(c => c.targetPrefix === 'videos/').every(c => c.mimeType === 'video/mp4'), 'All video upload candidates have verified video/mp4 MIME type');
+assert(s3Plan.candidates.filter(c => c.targetPrefix === 'posters/' || c.targetPrefix === 'backdrops/').every(c => c.mimeType === 'image/svg+xml'), 'All poster/backdrop candidates have verified image/svg+xml MIME type');
+assert(s3Plan.largeFileCount === 2, `Large files (>5MB) correctly flagged for multipart upload awareness (Flagged: ${s3Plan.largeFileCount})`);
+assert(s3Plan.totalBytes < 50 * 1024 * 1024, `Total proposed demo payload is within lightweight academic threshold (Actual: ${s3Plan.totalFormatted})`);
+
+// ----------------------------------------------------------------------------
 // Summary
 // ----------------------------------------------------------------------------
 console.log('\n======================================================');

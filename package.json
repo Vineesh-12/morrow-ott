@@ -8,6 +8,7 @@
     "start": "node frontend/server.js",
     "validate": "node scripts/validate-catalogue.mjs",
     "manifest": "node scripts/generate-asset-manifest.mjs",
+    "s3:plan": "node scripts/s3-upload-plan.mjs",
     "test": "node scripts/test-catalogue.mjs",
     "build": "node scripts/build.mjs"
   },

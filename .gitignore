@@ -26,3 +26,15 @@ Thumbs.db
 # Temporary / Scratch Files
 scratch/
 .tmp/
+
+# Video Media (Upload to S3, do not commit large media binaries to Git)
+*.mp4
+*.mkv
+*.webm
+*.avi
+*.mov
+
+# AWS Credentials & Local State
+.aws/
+credentials
+aws_credentials

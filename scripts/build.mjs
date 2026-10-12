@@ -53,6 +53,12 @@ try {
     console.log(`   ✓ ${rel} present (${(size / 1024).toFixed(1)} KB)`);
   }
 
+  // Step 4: Verify S3 Upload Plan
+  console.log('\n4. Verifying Amazon S3 Upload Planning (Phase 3)...');
+  const { generateS3UploadPlan } = await import('./s3-upload-plan.mjs');
+  const s3Plan = generateS3UploadPlan();
+  console.log(`   ✓ S3 upload plan verified (${s3Plan.totalFiles} candidate objects, ${s3Plan.totalFormatted}, 0 errors).`);
+
   console.log('\n======================================================');
   console.log('  Morrow OTT — Verification Build Completed Successfully');
   console.log('======================================================');

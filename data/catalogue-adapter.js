@@ -115,3 +115,50 @@ export function normalizeCatalogue(catalogueList) {
   if (!Array.isArray(catalogueList)) return [];
   return catalogueList.map(normalizeTitle);
 }
+
+/**
+ * Standard MIME type lookup mapping.
+ */
+export const MIME_TYPE_MAP = {
+  '.svg': 'image/svg+xml',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.png': 'image/png',
+  '.webp': 'image/webp',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.vtt': 'text/vtt; charset=utf-8'
+};
+
+/**
+ * Maps a logical/local catalogue asset key to its intended Amazon S3 object key prefix.
+ * Supported prefixes: 'posters/', 'backdrops/', 'videos/', 'subtitles/'.
+ * @param {string} logicalKey - e.g. "media/videos/cloud-intro.mp4"
+ * @param {string} assetType - e.g. "poster", "backdrop", "video", "subtitle_en"
+ * @returns {string} S3 object key, e.g. "videos/cloud-intro.mp4"
+ */
+export function mapAssetKeyToS3Key(logicalKey, assetType = '') {
+  if (!logicalKey) return '';
+  const clean = logicalKey.replace(/^\/+/, '');
+  const basename = clean.split('/').pop();
+
+  if (clean.startsWith('posters/') || clean.startsWith('backdrops/') || clean.startsWith('videos/') || clean.startsWith('subtitles/')) {
+    return clean;
+  }
+
+  const type = String(assetType).toLowerCase();
+  if (type === 'poster' || type === 'season_poster' || type === 'episode_thumbnail') {
+    return `posters/${basename}`;
+  }
+  if (type === 'backdrop') {
+    return `backdrops/${basename}`;
+  }
+  if (type === 'video' || type === 'episode_video' || clean.endsWith('.mp4') || clean.endsWith('.webm')) {
+    return `videos/${basename}`;
+  }
+  if (type.startsWith('subtitle') || clean.endsWith('.vtt')) {
+    return `subtitles/${basename}`;
+  }
+
+  return `posters/${basename}`;
+}
