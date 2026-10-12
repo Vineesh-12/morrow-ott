@@ -1,0 +1,234 @@
+{
+  "version": "2.0.0",
+  "generatedAt": "2026-10-12T08:30:00Z",
+  "environment": "development",
+  "catalogue": [
+    {
+      "id": "VID001",
+      "title": "The Cloud Paradox",
+      "contentType": "movie",
+      "synopsis": "When an experimental distributed intelligence becomes self-aware across orbital relay networks, a team of cybersecurity architects must isolate the core before humanity loses control.",
+      "genres": ["Sci-Fi", "Thriller"],
+      "releaseYear": 2026,
+      "language": "en",
+      "durationSeconds": 45,
+      "imdbRating": "8.6",
+      "rating": "U/A 16+",
+      "quality": "4K UHD",
+      "audio": "Dolby Atmos",
+      "posterKey": "media/thumbnails/cloud-intro.svg",
+      "backdropKey": "media/thumbnails/cloud-intro.svg",
+      "videoKey": "media/videos/cloud-intro.mp4",
+      "subtitleKeys": {
+        "en": "media/subtitles/cloud-intro.en.vtt"
+      },
+      "availabilityStatus": "available",
+      "featured": true,
+      "createdAt": "2026-03-15T18:30:00Z",
+      "updatedAt": "2026-03-15T18:30:00Z",
+      "tags": ["cybersecurity", "orbital", "distributed intelligence", "ai thriller"],
+      "keywords": ["ai", "hacker", "satellite", "space", "datacenter", "security"]
+    },
+    {
+      "id": "VID002",
+      "title": "Beyond the Horizon",
+      "contentType": "movie",
+      "synopsis": "A peaceful forest guardian takes a stand against woodland troublemakers in this cinematic animated epic of friendship, resilience, and courage.",
+      "genres": ["Animation", "Adventure"],
+      "releaseYear": 2025,
+      "language": "en",
+      "durationSeconds": 33,
+      "imdbRating": "8.2",
+      "rating": "U",
+      "quality": "4K UHD",
+      "audio": "Dolby 5.1",
+      "posterKey": "media/thumbnails/big-buck-bunny.svg",
+      "backdropKey": "media/thumbnails/big-buck-bunny.svg",
+      "videoKey": "media/videos/big-buck-bunny.mp4",
+      "subtitleKeys": {
+        "en": "media/subtitles/big-buck-bunny.en.vtt"
+      },
+      "availabilityStatus": "available",
+      "featured": true,
+      "createdAt": "2026-02-28T14:15:00Z",
+      "updatedAt": "2026-02-28T14:15:00Z",
+      "tags": ["woodland", "friendship", "courage", "family animation"],
+      "keywords": ["bunny", "forest", "animals", "funny", "relax", "family", "comedy"]
+    },
+    {
+      "id": "VID003",
+      "title": "Flora: The Secret Kingdom",
+      "contentType": "series",
+      "synopsis": "An unprecedented microscopic exploration into how botanical flora communicate, defend their canopy, and shape Earth's living biosphere.",
+      "genres": ["Documentary", "Nature & Wildlife"],
+      "releaseYear": 2026,
+      "language": "en",
+      "durationSeconds": 5,
+      "imdbRating": "8.9",
+      "rating": "U",
+      "quality": "HD 1080p",
+      "audio": "Stereo",
+      "posterKey": "media/thumbnails/botanical-life.svg",
+      "backdropKey": "media/thumbnails/botanical-life.svg",
+      "availabilityStatus": "available",
+      "featured": false,
+      "createdAt": "2026-03-22T09:00:00Z",
+      "updatedAt": "2026-03-22T09:00:00Z",
+      "tags": ["botany", "microscopic", "biosphere", "nature docuseries"],
+      "keywords": ["plants", "forest", "canopy", "science", "biology", "documentary"],
+      "seasons": [
+        {
+          "seasonNum": 1,
+          "title": "Season 1",
+          "posterKey": "media/thumbnails/botanical-life.svg",
+          "episodes": [
+            {
+              "id": "VID003-E1",
+              "parentSeriesId": "VID003",
+              "seasonNum": 1,
+              "episodeNum": 1,
+              "title": "Canopy Awakening",
+              "synopsis": "Microscopic optical lenses capture the dawn activation of cellular transpiration across old-growth rainforest trees.",
+              "durationSeconds": 5,
+              "videoKey": "media/videos/botanical-life.mp4",
+              "thumbnailKey": "media/thumbnails/botanical-life.svg",
+              "availabilityStatus": "available"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "VID004",
+      "title": "Metropolis Nights",
+      "contentType": "series",
+      "synopsis": "Beneath the vertical towers and rain-slicked thoroughfares of a 21st-century megacity, interconnected lives collide during one fateful midnight shift.",
+      "genres": ["Drama", "Mystery"],
+      "releaseYear": 2026,
+      "language": "en",
+      "durationSeconds": 10,
+      "imdbRating": "8.4",
+      "rating": "U/A 16+",
+      "quality": "4K UHD",
+      "audio": "Dolby 5.1",
+      "posterKey": "media/thumbnails/urban-rhythm.svg",
+      "backdropKey": "media/thumbnails/urban-rhythm.svg",
+      "availabilityStatus": "available",
+      "featured": false,
+      "createdAt": "2026-03-10T11:45:00Z",
+      "updatedAt": "2026-03-10T11:45:00Z",
+      "tags": ["neon city", "midnight", "interconnected", "urban crime"],
+      "keywords": ["city", "rain", "midnight", "skyscrapers", "detective", "drama", "series"],
+      "seasons": [
+        {
+          "seasonNum": 1,
+          "title": "Season 1",
+          "posterKey": "media/thumbnails/urban-rhythm.svg",
+          "episodes": [
+            {
+              "id": "VID004-E1",
+              "parentSeriesId": "VID004",
+              "seasonNum": 1,
+              "episodeNum": 1,
+              "title": "Neon Skyline",
+              "synopsis": "Beneath towering vertical thoroughfares, an investigative team uncovers an encrypted orbital communications link.",
+              "durationSeconds": 10,
+              "videoKey": "media/videos/urban-rhythm.mp4",
+              "thumbnailKey": "media/thumbnails/urban-rhythm.svg",
+              "availabilityStatus": "available"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "VID005",
+      "title": "Solaris Drift",
+      "contentType": "movie",
+      "synopsis": "A lone deep-space surveying vessel drifts into uncharted solar currents, forcing its navigators to compute survival vectors manually.",
+      "genres": ["Sci-Fi", "Adventure"],
+      "releaseYear": 2026,
+      "language": "en",
+      "durationSeconds": 7200,
+      "imdbRating": "7.9",
+      "rating": "U/A 13+",
+      "quality": "4K UHD",
+      "audio": "Dolby Atmos",
+      "posterKey": "media/thumbnails/cloud-intro.svg",
+      "backdropKey": "media/thumbnails/cloud-intro.svg",
+      "videoKey": "media/videos/solaris-drift.mp4",
+      "availabilityStatus": "metadata_only",
+      "featured": false,
+      "createdAt": "2026-04-01T10:00:00Z",
+      "updatedAt": "2026-04-01T10:00:00Z",
+      "tags": ["deep space", "solar drift", "navigation", "cosmic adventure"],
+      "keywords": ["sun", "solar", "spaceship", "drift", "stars", "cosmos"]
+    },
+    {
+      "id": "VID006",
+      "title": "Silent Echoes",
+      "contentType": "movie",
+      "synopsis": "In a coastal archipelago shrouded in winter fog, an audio archivist discovers anomalous sound recordings dating back four decades.",
+      "genres": ["Mystery", "Drama"],
+      "releaseYear": 2026,
+      "language": "en",
+      "durationSeconds": 6400,
+      "imdbRating": "8.1",
+      "rating": "U/A 16+",
+      "quality": "4K UHD",
+      "audio": "Dolby 5.1",
+      "posterKey": "media/thumbnails/urban-rhythm.svg",
+      "backdropKey": "media/thumbnails/urban-rhythm.svg",
+      "videoKey": "media/videos/silent-echoes.mp4",
+      "availabilityStatus": "coming_soon",
+      "featured": false,
+      "createdAt": "2026-04-05T12:00:00Z",
+      "updatedAt": "2026-04-05T12:00:00Z",
+      "tags": ["coastal mystery", "sound archivist", "fog", "investigation"],
+      "keywords": ["island", "audio", "recorder", "cold", "secret", "mystery"]
+    },
+    {
+      "id": "VID007",
+      "title": "The Quantum Rift",
+      "contentType": "series",
+      "synopsis": "When a subatomic particle accelerator in Geneva opens a microscopic bridge to a parallel timeline, physicists race to decipher signals from the other side.",
+      "genres": ["Sci-Fi", "Thriller"],
+      "releaseYear": 2026,
+      "language": "en",
+      "durationSeconds": 3000,
+      "imdbRating": "8.5",
+      "rating": "U/A 16+",
+      "quality": "4K UHD",
+      "audio": "Dolby Atmos",
+      "posterKey": "media/thumbnails/cloud-intro.svg",
+      "backdropKey": "media/thumbnails/cloud-intro.svg",
+      "availabilityStatus": "coming_soon",
+      "featured": false,
+      "createdAt": "2026-04-10T15:00:00Z",
+      "updatedAt": "2026-04-10T15:00:00Z",
+      "tags": ["parallel timelines", "cern", "quantum physics", "multiverse"],
+      "keywords": ["quantum", "timeline", "parallel", "accelerator", "science", "multiverse"],
+      "seasons": [
+        {
+          "seasonNum": 1,
+          "title": "Season 1",
+          "posterKey": "media/thumbnails/cloud-intro.svg",
+          "episodes": [
+            {
+              "id": "VID007-E1",
+              "parentSeriesId": "VID007",
+              "seasonNum": 1,
+              "episodeNum": 1,
+              "title": "The Anomaly",
+              "synopsis": "Sensors in the main collider ring register impossible harmonic interference patterns matching quantum timeline echoes.",
+              "durationSeconds": 3000,
+              "videoKey": "media/videos/quantum-rift-e1.mp4",
+              "thumbnailKey": "media/thumbnails/cloud-intro.svg",
+              "availabilityStatus": "coming_soon"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

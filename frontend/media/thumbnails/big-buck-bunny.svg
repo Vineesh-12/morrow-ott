@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <radialGradient id="bunnyGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#3A332C" />
+      <stop offset="50%" stop-color="#211E1B" />
+      <stop offset="100%" stop-color="#111315" />
+    </radialGradient>
+    <linearGradient id="horizonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C87552" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#111315" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="overlay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#111315" stop-opacity="0.92" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bunnyGlow)" />
+
+  <!-- Moon / Sun on Horizon -->
+  <circle cx="880" cy="240" r="140" fill="#C87552" opacity="0.35" />
+  <circle cx="880" cy="240" r="110" fill="#F2EEE8" opacity="0.15" />
+
+  <!-- Mountainous Silhouette Ridges -->
+  <path d="M 0 450 Q 320 320 640 420 T 1280 340 L 1280 720 L 0 720 Z" fill="#1C1E20" opacity="0.8" />
+  <path d="M 0 510 Q 400 400 800 490 T 1280 430 L 1280 720 L 0 720 Z" fill="#16181A" />
+
+  <!-- Stylized Forest Silhouettes -->
+  <g fill="#0E0F11" opacity="0.9">
+    <polygon points="200,490 220,430 240,490" />
+    <polygon points="230,500 255,420 280,500" />
+    <polygon points="270,510 300,440 330,510" />
+    <polygon points="750,470 780,390 810,470" />
+    <polygon points="790,480 825,380 860,480" />
+    <polygon points="850,490 880,410 910,490" />
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1280" height="720" fill="url(#overlay)" />
+
+  <!-- Text / Metadata -->
+  <rect x="70" y="460" width="105" height="26" rx="4" fill="#C87552" />
+  <text x="122" y="478" font-family="'Inter', -apple-system, sans-serif" font-size="12" font-weight="700" fill="#F2EEE8" text-anchor="middle" letter-spacing="1.5">ANIMATION</text>
+
+  <text x="70" y="530" font-family="'Inter', -apple-system, sans-serif" font-size="42" font-weight="700" fill="#F2EEE8" letter-spacing="-0.5">Beyond the Horizon</text>
+  <text x="70" y="575" font-family="'Inter', -apple-system, sans-serif" font-size="20" font-weight="400" fill="#A8A49E">A Journey Into the Great Forest Wilderness</text>
+
+  <rect x="70" y="615" width="70" height="24" rx="4" fill="#1C1E20" stroke="#343638" />
+  <text x="105" y="632" font-family="'Inter', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#A8A49E" text-anchor="middle">HD 720p</text>
+  <text x="160" y="632" font-family="'Inter', -apple-system, sans-serif" font-size="14" fill="#A8A49E">0:33 • Blender Studio CC</text>
+</svg>

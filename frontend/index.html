@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Morrow — A world of stories. Discover films, series and stories worth staying up for.">
+  <meta name="theme-color" content="#111315">
+  <title>Morrow — A World of Stories</title>
+
+  <!-- Typography: Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Shared Application Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <div class="header-left">
+        <!-- Brand Wordmark & Logo -->
+        <a href="#/" class="brand-logo" id="nav-brand" aria-label="Morrow Home">
+          <div class="brand-mark" aria-hidden="true">
+            <svg class="brand-mark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="9"/>
+              <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="brand-text">MORROW</span>
+        </a>
+
+        <!-- Primary Desktop Navigation -->
+        <nav class="main-nav" aria-label="Primary Navigation">
+          <a href="#/" class="nav-link active" id="nav-home" data-route="home">Home</a>
+          <a href="#/movies" class="nav-link" id="nav-movies" data-route="movies">Movies</a>
+          <a href="#/series" class="nav-link" id="nav-series" data-route="series">Series</a>
+          <a href="#/my-list" class="nav-link" id="nav-mylist" data-route="my-list">
+            My List <span class="badge-count" id="mylist-count" style="display: none;">0</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="header-right">
+        <!-- Search Trigger / Quick Link -->
+        <a href="#/search" class="header-action-btn" id="header-search-btn" aria-label="Search Catalogue" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="header-icon">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </a>
+
+        <!-- Morrow AI Concierge Trigger -->
+        <a href="#/ai" class="ai-header-btn" id="header-ai-btn" aria-label="Morrow AI Concierge" title="Ask Morrow AI">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ai-sparkle-icon">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+          </svg>
+          <span class="ai-badge-text">AI</span>
+        </a>
+
+        <!-- Profile / Preferences Menu Trigger -->
+        <div class="profile-dropdown-wrapper">
+          <button type="button" class="profile-avatar-btn" id="profile-btn" aria-label="User Profile" aria-expanded="false">
+            <span class="avatar-initials">M</span>
+          </button>
+          
+          <!-- Dropdown Menu -->
+          <div class="profile-menu" id="profile-menu" style="display: none;">
+            <div class="profile-menu-header">
+              <span class="profile-name">Morrow Viewer</span>
+              <span class="profile-plan">Standard HD • Local Profile</span>
+            </div>
+            <div class="profile-menu-divider"></div>
+            <a href="#/profiles" class="profile-menu-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Manage Profiles
+            </a>
+            <a href="#/my-list" class="profile-menu-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              My Library &amp; History
+            </a>
+            <a href="#/settings" class="profile-menu-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              Playback &amp; Privacy Settings
+            </a>
+            <a href="#/help" class="profile-menu-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Help &amp; Troubleshooting
+            </a>
+            <div class="profile-menu-divider"></div>
+            <button type="button" class="profile-menu-item btn-clear-data" id="btn-quick-clear-history">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Clear Viewing History
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main id="app-container">
+
+    <!-- ====================================================================
+         VIEW 1: DISCOVERY HOMEPAGE (#/)
+         ==================================================================== -->
+    <div id="view-home" class="page-view active">
+      
+      <!-- 1. Curated Hero Carousel Section -->
+      <section class="hero-section" id="hero-section" aria-label="Featured Presentation" tabindex="0">
+        <div class="hero-backdrop-container">
+          <div class="hero-backdrop-image" id="hero-backdrop"></div>
+          <div class="hero-gradient-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="eyebrow-tag" id="hero-eyebrow-tag">A WORLD OF STORIES</span>
+            <span class="quality-tag" id="hero-quality-tag">4K UHD</span>
+            <span class="rating-tag" id="hero-rating-tag">★ 8.6 IMDb</span>
+          </div>
+
+          <h1 class="hero-title" id="hero-title" role="button" tabindex="0" title="View details">Loading Featured Title...</h1>
+
+          <div class="hero-metadata">
+            <span class="meta-item genre" id="hero-genre">—</span>
+            <span class="meta-dot">&bull;</span>
+            <span class="meta-item year" id="hero-year">2026</span>
+            <span class="meta-dot">&bull;</span>
+            <span class="meta-item duration" id="hero-duration">—</span>
+            <span class="meta-dot">&bull;</span>
+            <span class="meta-item audio">Dolby Atmos</span>
+          </div>
+
+          <p class="hero-synopsis" id="hero-synopsis">
+            Discover films, series and stories worth staying up for.
+          </p>
+
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary" id="hero-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon" aria-hidden="true">
+                <polygon points="7,5 19,12 7,19"/>
+              </svg>
+              <span>Watch Now</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="hero-info-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              <span>More Info</span>
+            </button>
+            <button type="button" class="btn btn-icon-only" id="hero-list-btn" aria-label="Add to My List" title="Add to My List">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon" aria-hidden="true">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Carousel Slide Navigation Controls -->
+          <div class="hero-carousel-controls" id="hero-carousel-nav">
+            <button type="button" class="carousel-btn prev" id="hero-prev-btn" aria-label="Previous Slide">&lsaquo;</button>
+            <div class="carousel-indicators" id="hero-indicators"></div>
+            <button type="button" class="carousel-btn next" id="hero-next-btn" aria-label="Next Slide">&rsaquo;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Continue Watching (Rendered dynamically when watch progress exists) -->
+      <section class="catalogue-row-section" id="section-continue-watching" style="display: none;">
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Continue Watching</h2>
+              <span class="section-subtitle">Pick up right where you left off</span>
+            </div>
+            <a href="#/continue-watching" class="section-more-link">View All &rarr;</a>
+          </div>
+          <div class="video-grid" id="grid-continue-watching"></div>
+        </div>
+      </section>
+
+      <!-- 3. Popular on Morrow -->
+      <section class="catalogue-row-section" id="section-popular">
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Popular on Morrow</h2>
+              <span class="section-subtitle">Trending movies and popular series ranked by audience ratings</span>
+            </div>
+            <a href="#/movies" class="section-more-link">Explore Movies &rarr;</a>
+          </div>
+          <div class="video-grid" id="grid-popular"></div>
+        </div>
+      </section>
+
+      <!-- 4. Recently Added -->
+      <section class="catalogue-row-section" id="section-recently-added">
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Recently Added</h2>
+              <span class="section-subtitle">Newly added cinema releases and seasonal series</span>
+            </div>
+            <a href="#/movies" class="section-more-link">View Catalogue &rarr;</a>
+          </div>
+          <div class="video-grid" id="grid-recently-added"></div>
+        </div>
+      </section>
+
+      <!-- 5. Browse by Genre (Chips) -->
+      <section class="genre-chips-section">
+        <div class="section-container">
+          <div class="section-header">
+            <h2 class="section-title">Browse by Genre</h2>
+          </div>
+          <div class="genre-chips-list" id="home-genre-chips">
+            <a href="#/genre/sci-fi" class="genre-chip">Sci-Fi</a>
+            <a href="#/genre/thriller" class="genre-chip">Thriller</a>
+            <a href="#/genre/animation" class="genre-chip">Animation</a>
+            <a href="#/genre/adventure" class="genre-chip">Adventure</a>
+            <a href="#/genre/documentary" class="genre-chip">Documentary</a>
+            <a href="#/genre/drama" class="genre-chip">Drama</a>
+            <a href="#/genre/mystery" class="genre-chip">Mystery</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Series Worth Exploring -->
+      <section class="catalogue-row-section" id="section-series">
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Series Worth Exploring</h2>
+              <span class="section-subtitle">Complete seasons, episodic storylines and docuseries</span>
+            </div>
+            <a href="#/series" class="section-more-link">Explore Series &rarr;</a>
+          </div>
+          <div class="video-grid" id="grid-home-series"></div>
+        </div>
+      </section>
+
+      <!-- 7. Explore All Titles -->
+      <section class="catalogue-row-section" id="section-all">
+        <div class="section-container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Explore All Titles</h2>
+              <span class="section-subtitle" id="home-all-count">All available titles</span>
+            </div>
+          </div>
+          <div class="video-grid" id="grid-home-all"></div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ====================================================================
+         VIEW 2: MOVIES CATALOGUE (#/movies)
+         ==================================================================== -->
+    <div id="view-movies" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="page-header-block">
+          <h1 class="page-title">Movies</h1>
+          <p class="page-subtitle">Feature films, indie releases, and cinema originals</p>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-search-box">
+            <input 
+              type="search" 
+              id="search-movies-input" 
+              class="filter-search-input" 
+              placeholder="Search within movies..." 
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-movies-genre" class="filter-label">Genre:</label>
+            <select id="filter-movies-genre" class="filter-select">
+              <option value="ALL">All Genres</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Animation">Animation</option>
+              <option value="Adventure">Adventure</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-movies-year" class="filter-label">Year:</label>
+            <select id="filter-movies-year" class="filter-select">
+              <option value="ALL">All Years</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="sort-movies" class="filter-label">Sort By:</label>
+            <select id="sort-movies" class="filter-select">
+              <option value="featured">Featured</option>
+              <option value="recent">Recently Added</option>
+              <option value="rating">Highest IMDb Rating</option>
+              <option value="title">Title (A-Z)</option>
+              <option value="year">Release Year</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-movies-filters">Clear Filters</button>
+          <span class="results-count" id="movies-results-count">Showing titles</span>
+        </div>
+
+        <div class="video-grid" id="grid-movies-page"></div>
+
+        <div class="empty-state-card" id="movies-empty-state" style="display: none;">
+          <h3>No Movies Found</h3>
+          <p>No films match your search and filter criteria.</p>
+          <button type="button" class="btn btn-secondary" id="btn-reset-movies-filters">Reset Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 3: SERIES CATALOGUE (#/series)
+         ==================================================================== -->
+    <div id="view-series" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="page-header-block">
+          <h1 class="page-title">Series &amp; Documentaries</h1>
+          <p class="page-subtitle">Binge-worthy series, docuseries, and serial specials</p>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-search-box">
+            <input 
+              type="search" 
+              id="search-series-input" 
+              class="filter-search-input" 
+              placeholder="Search within series..." 
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-series-genre" class="filter-label">Genre:</label>
+            <select id="filter-series-genre" class="filter-select">
+              <option value="ALL">All Genres</option>
+              <option value="Documentary">Documentary</option>
+              <option value="Drama">Drama</option>
+              <option value="Mystery">Mystery</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-series-year" class="filter-label">Year:</label>
+            <select id="filter-series-year" class="filter-select">
+              <option value="ALL">All Years</option>
+              <option value="2026">2026</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="sort-series" class="filter-label">Sort By:</label>
+            <select id="sort-series" class="filter-select">
+              <option value="featured">Featured</option>
+              <option value="recent">Recently Added</option>
+              <option value="rating">Highest IMDb Rating</option>
+              <option value="title">Title (A-Z)</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-series-filters">Clear Filters</button>
+          <span class="results-count" id="series-results-count">Showing series</span>
+        </div>
+
+        <div class="video-grid" id="grid-series-page"></div>
+
+        <div class="empty-state-card" id="series-empty-state" style="display: none;">
+          <h3>No Series Found</h3>
+          <p>No episodic titles match your search and filter criteria.</p>
+          <button type="button" class="btn btn-secondary" id="btn-reset-series-filters">Reset Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 4: GENRE CATALOGUE (#/genre/:slug)
+         ==================================================================== -->
+    <div id="view-genre" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="genre-header-row">
+          <div>
+            <span class="eyebrow-tag">GENRE CATALOGUE</span>
+            <div class="genre-title-wrapper">
+              <h1 class="page-title" id="genre-view-title">Genre</h1>
+              <span class="genre-active-pill" id="genre-chip-badge">
+                <span id="genre-pill-text">Genre</span>
+                <a href="#/movies" class="genre-pill-remove" id="btn-clear-genre-filter" title="Remove Genre Filter">&times;</a>
+              </span>
+            </div>
+            <span class="results-count" id="genre-results-count">Showing titles</span>
+          </div>
+          <a href="#/" class="btn btn-secondary">&larr; All Titles</a>
+        </div>
+        <div class="video-grid" id="grid-genre-page"></div>
+
+        <div class="empty-state-card" id="genre-empty-state" style="display: none;">
+          <h3>No Titles in this Genre</h3>
+          <p>There are currently no titles catalogued under this genre category.</p>
+          <a href="#/movies" class="btn btn-secondary">Browse All Movies</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 5: SEARCH EXPERIENCE (#/search)
+         ==================================================================== -->
+    <div id="view-search" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="search-page-header">
+          <h1 class="page-title">Search</h1>
+          <p class="page-subtitle">Find movies, series, genres, or keywords across the Morrow catalogue</p>
+        </div>
+
+        <!-- Big Search Bar -->
+        <div class="search-bar-full">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-input-icon">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input 
+            type="search" 
+            id="search-page-input" 
+            class="search-input-lg" 
+            placeholder="Search by title, genre, keyword (e.g. Paradox, Forest, Microscopic)..." 
+            autocomplete="off"
+          >
+          <button type="button" class="btn-clear-search" id="btn-clear-search-page">&times;</button>
+        </div>
+
+        <!-- Search Filters & Content Type Tabs -->
+        <div class="search-filters-bar">
+          <div class="search-type-filters">
+            <button type="button" class="search-type-pill active" data-type="ALL" id="search-type-all">All Content</button>
+            <button type="button" class="search-type-pill" data-type="movie" id="search-type-movies">Movies</button>
+            <button type="button" class="search-type-pill" data-type="series" id="search-type-series">Series</button>
+          </div>
+
+          <div class="search-dropdown-filters">
+            <select id="search-genre-select" class="filter-select">
+              <option value="ALL">All Genres</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Animation">Animation</option>
+              <option value="Documentary">Documentary</option>
+              <option value="Drama">Drama</option>
+            </select>
+
+            <select id="search-year-select" class="filter-select">
+              <option value="ALL">All Years</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Recent Searches Pill Tags -->
+        <div class="recent-searches-row" id="recent-searches-box">
+          <span class="recent-label">Recent:</span>
+          <div class="recent-tags" id="recent-search-tags"></div>
+          <button type="button" class="btn-text" id="btn-clear-recent-searches">Clear History</button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="search-results-container">
+          <div class="search-results-header">
+            <h2 class="search-results-title" id="search-results-heading">Explore Catalogue</h2>
+            <span class="search-results-count" id="search-results-count">4 titles available</span>
+          </div>
+          <div class="video-grid" id="grid-search-results"></div>
+          
+          <div class="empty-state-card" id="search-empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="empty-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <h3>No Titles Found</h3>
+            <p id="search-empty-msg">We couldn't find any titles matching your query.</p>
+            <div class="search-ai-prompt-box">
+              <p>Looking for a recommendation? Try asking <strong>Morrow AI</strong>.</p>
+              <a href="#/ai" class="btn btn-secondary">Ask Morrow AI &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 6: MORROW AI CONCIERGE (#/ai)
+         ==================================================================== -->
+    <div id="view-ai" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="ai-page-header">
+          <div class="ai-brand-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ai-sparkle-lg">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+            </svg>
+            <span>Morrow AI Concierge</span>
+          </div>
+          <h1 class="page-title">Find Something Worth Watching</h1>
+          <p class="page-subtitle">Your personal entertainment concierge. Ask natural questions, explore by mood, or verify catalogue availability.</p>
+        </div>
+
+        <!-- Prompt Suggestions Pills -->
+        <div class="ai-suggestions-section">
+          <span class="suggestions-label">Try Asking:</span>
+          <div class="ai-suggestion-pills">
+            <button type="button" class="ai-pill-btn" data-prompt="Find a suspenseful thriller series with unexpected twists.">
+              &ldquo;Find a suspenseful thriller with unexpected twists&rdquo;
+            </button>
+            <button type="button" class="ai-pill-btn" data-prompt="Is Interstellar available on Morrow?">
+              &ldquo;Is Interstellar available on Morrow?&rdquo;
+            </button>
+            <button type="button" class="ai-pill-btn" data-prompt="Recommend a comedy under two hours.">
+              &ldquo;Recommend a comedy under two hours&rdquo;
+            </button>
+            <button type="button" class="ai-pill-btn" data-prompt="Recommend a short documentary to watch right now.">
+              &ldquo;Recommend a short documentary to watch right now&rdquo;
+            </button>
+            <button type="button" class="ai-pill-btn" data-prompt="What are your highest rated series on Morrow?">
+              &ldquo;What are your highest rated series on Morrow?&rdquo;
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Stream Window -->
+        <div class="ai-chat-window" id="ai-chat-window">
+          <!-- Welcome message -->
+          <div class="ai-message assistant">
+            <div class="ai-avatar">AI</div>
+            <div class="ai-bubble">
+              <p>Hello! I am your <strong>Morrow AI Concierge</strong>. Tell me what mood you're in, how much time you have, or ask about specific genres and titles in our catalogue. I will verify everything against our real streaming catalogue before recommending it to you.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input Bar -->
+        <div class="ai-input-bar">
+          <textarea 
+            id="ai-user-input" 
+            class="ai-input-box" 
+            placeholder="Ask Morrow AI... (e.g. 'Is Interstellar available on Morrow?' or 'Find a suspenseful thriller')" 
+            rows="1"
+          ></textarea>
+          <button type="button" class="ai-send-btn" id="btn-send-ai" aria-label="Send message">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="ai-footer-note">
+          <span>Verified Against Morrow Catalogue &bull; AWS Generative AI Service Interface (Development Mode)</span>
+          <button type="button" class="btn-text" id="btn-clear-ai-chat">Clear Conversation</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 7: MY MORROW LIBRARY (#/my-list)
+         ==================================================================== -->
+    <div id="view-mylist" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="page-header-block page-header-split">
+          <div>
+            <h1 class="page-title">My Library</h1>
+            <p class="page-subtitle">Your saved watchlist, in-progress streams, completed titles and viewing history</p>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-lib-clear-history">Clear History</button>
+        </div>
+
+        <!-- Library Tabs -->
+        <div class="library-tabs">
+          <button type="button" class="lib-tab active" data-tab="watchlist" id="tab-btn-watchlist">
+            My List (<span id="lib-count-watchlist">0</span>)
+          </button>
+          <button type="button" class="lib-tab" data-tab="continue" id="tab-btn-continue">
+            Continue Watching (<span id="lib-count-continue">0</span>)
+          </button>
+          <button type="button" class="lib-tab" data-tab="history" id="tab-btn-history">
+            Recently Watched (<span id="lib-count-history">0</span>)
+          </button>
+          <button type="button" class="lib-tab" data-tab="completed" id="tab-btn-completed">
+            Completed (<span id="lib-count-completed">0</span>)
+          </button>
+        </div>
+
+        <!-- Tab Content Grids -->
+        <div id="lib-tab-content-watchlist" class="lib-tab-panel">
+          <div class="video-grid" id="grid-library-watchlist"></div>
+          <div class="empty-state-card" id="watchlist-empty" style="display: none;">
+            <h3>Your Next Favourite Starts Here</h3>
+            <p>You haven't saved any movies or series to your list yet. Click <strong>+ My List</strong> on any title to save it for later.</p>
+            <a href="#/movies" class="btn btn-secondary">Browse Movies</a>
+          </div>
+        </div>
+
+        <div id="lib-tab-content-continue" class="lib-tab-panel" style="display: none;">
+          <div class="video-grid" id="grid-library-continue"></div>
+          <div class="empty-state-card" id="continue-empty" style="display: none;">
+            <h3>No Unfinished Streams</h3>
+            <p>When you pause a movie or episode partway through, it will appear here so you can resume anytime.</p>
+            <a href="#/" class="btn btn-secondary">Explore Titles</a>
+          </div>
+        </div>
+
+        <div id="lib-tab-content-history" class="lib-tab-panel" style="display: none;">
+          <div class="video-grid" id="grid-library-history"></div>
+          <div class="empty-state-card" id="history-empty" style="display: none;">
+            <h3>No Recent Activity</h3>
+            <p>Titles you stream will be recorded here for easy re-watching.</p>
+            <a href="#/" class="btn btn-secondary">Watch Something</a>
+          </div>
+        </div>
+
+        <div id="lib-tab-content-completed" class="lib-tab-panel" style="display: none;">
+          <div class="video-grid" id="grid-library-completed"></div>
+          <div class="empty-state-card" id="completed-empty" style="display: none;">
+            <h3>No Completed Streams Yet</h3>
+            <p>Titles you finish watching (streamed over 90% duration) will appear here.</p>
+            <a href="#/movies" class="btn btn-secondary">Find Something to Watch</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 8: TITLE DETAILS DEDICATED PAGE (#/title/:id)
+         ==================================================================== -->
+    <div id="view-title" class="page-view" style="display: none;">
+      <div class="title-details-backdrop-hero">
+        <div class="title-hero-image" id="title-page-backdrop"></div>
+        <div class="title-hero-gradient"></div>
+        <div class="section-container title-hero-inner">
+          <button type="button" class="btn-back" id="title-back-btn">&larr; Back to Browse</button>
+          
+          <div class="title-hero-layout">
+            <!-- Portrait Poster Card Column -->
+            <div class="title-poster-column">
+              <img id="title-page-poster" src="" alt="Title Poster" class="title-details-poster-img">
+            </div>
+
+            <!-- Title Metadata & Actions Column -->
+            <div class="title-hero-info">
+              <div class="hero-eyebrow">
+                <span class="eyebrow-tag" id="title-page-type">MOVIE</span>
+                <span class="quality-tag" id="title-page-quality">4K UHD</span>
+                <span class="rating-tag" id="title-page-rating">★ 8.6 IMDb</span>
+              </div>
+              <h1 class="title-page-name" id="title-page-name">Title Name</h1>
+              <div class="title-meta-row">
+                <span id="title-page-genre">Genre</span>
+                <span class="meta-dot">&bull;</span>
+                <span id="title-page-year">2026</span>
+                <span class="meta-dot">&bull;</span>
+                <span id="title-page-duration">0:45</span>
+                <span class="meta-dot">&bull;</span>
+                <span id="title-page-audio">Dolby Atmos</span>
+              </div>
+              <p class="title-page-synopsis" id="title-page-synopsis">Synopsis...</p>
+              
+              <!-- Honest Availability Message (shown if unavailable) -->
+              <div class="title-unavailable-banner" id="title-unavailable-banner" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="unavailable-icon"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                <span>This title is currently unavailable on Morrow.</span>
+              </div>
+
+              <div class="title-actions-row">
+                <button type="button" class="btn btn-primary" id="title-page-play-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="btn-icon"><polygon points="7,5 19,12 7,19"/></svg>
+                  <span id="title-page-play-label">Watch Now</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="title-page-list-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M12 5v14M5 12h14"/></svg>
+                  <span id="title-page-list-label">Add to My List</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="title-page-share-btn" title="Copy Link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode List (for Series) -->
+      <div class="section-container" id="title-episodes-section" style="display: none; padding-top: 2rem;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Episodes</h2>
+            <span class="section-subtitle">Select an episode to begin streaming</span>
+          </div>
+          <div class="season-selector-wrapper">
+            <label for="season-select" class="filter-label">Season:</label>
+            <select id="season-select" class="filter-select">
+              <option value="1">Season 1</option>
+            </select>
+          </div>
+        </div>
+        <div class="episode-list-cards" id="title-episodes-list"></div>
+      </div>
+
+      <!-- More Like This Row -->
+      <div class="section-container" style="padding-top: 3rem; padding-bottom: 5rem;">
+        <div class="section-header">
+          <h2 class="section-title">More Like This</h2>
+        </div>
+        <div class="video-grid" id="grid-title-related"></div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 9: PROFESSIONAL VIDEO PLAYER (#/watch/:id)
+         ==================================================================== -->
+    <div id="view-player" class="page-view player-fullscreen-view" style="display: none;">
+      <!-- Player Top Bar (Overlay) -->
+      <div class="player-top-overlay" id="player-top-overlay">
+        <button type="button" class="player-back-action" id="player-exit-btn" aria-label="Exit Player">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="back-icon"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/></svg>
+          <span id="player-return-label">Back</span>
+        </button>
+        <div class="player-title-display">
+          <span class="player-stream-title" id="player-stream-title">Stream Title</span>
+          <span class="player-stream-sub" id="player-stream-sub">4K UHD &bull; Dolby Audio</span>
+        </div>
+      </div>
+
+      <!-- HTML5 Video Element Wrapper -->
+      <div class="player-video-viewport" id="player-viewport">
+        <video 
+          id="main-video-player" 
+          class="morrow-video-element"
+          playsinline 
+          preload="metadata"
+          crossorigin="anonymous"
+          aria-label="Morrow Video Player"
+        ></video>
+
+        <!-- Buffering Spinner -->
+        <div class="player-spinner" id="player-buffering" style="display: none;">
+          <div class="spin-ring"></div>
+        </div>
+
+        <!-- Playback Error State -->
+        <div class="player-error-modal" id="player-error-state" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <h2 id="player-error-heading">Stream Unavailable</h2>
+          <p id="player-error-text">Unable to retrieve media from cloud origin.</p>
+          <div class="player-error-btns">
+            <button type="button" class="btn btn-secondary" id="btn-player-retry">Retry Playback</button>
+            <button type="button" class="btn btn-primary" id="btn-player-return">Return to Browse</button>
+          </div>
+        </div>
+
+        <!-- Stream Completed Screen -->
+        <div class="player-completed-overlay" id="player-completed-state" style="display: none;">
+          <div class="completed-card">
+            <span class="eyebrow-tag">COMPLETED</span>
+            <h2 id="player-completed-title">You've finished watching</h2>
+            <p>Hope you enjoyed this story on Morrow.</p>
+            <div class="completed-actions">
+              <button type="button" class="btn btn-primary" id="btn-player-replay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                <span>Replay</span>
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-player-next-ep-complete" style="display: none;">
+                <span>Next Episode &rarr;</span>
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-player-finish-back">
+                <span>Return to Browse</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player Bottom Controls Bar (Custom OTT UI) -->
+      <div class="player-bottom-overlay" id="player-bottom-overlay">
+        <!-- Scrub Timeline Bar -->
+        <div class="player-timeline-box">
+          <input type="range" class="player-seek-slider" id="player-seek" min="0" max="100" value="0" step="0.1" aria-label="Seek Video">
+          <div class="player-timeline-progress" id="player-timeline-fill"></div>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="player-controls-row">
+          <div class="controls-left">
+            <!-- Play/Pause -->
+            <button type="button" class="player-ctrl-btn" id="btn-player-toggle" aria-label="Play/Pause">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ctrl-icon" id="icon-player-play"><polygon points="6,4 20,12 6,20"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ctrl-icon" id="icon-player-pause" style="display: none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            </button>
+
+            <!-- 10s Rewind -->
+            <button type="button" class="player-ctrl-btn" id="btn-player-rewind" aria-label="Rewind 10 Seconds" title="Rewind 10s (Left Arrow)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            </button>
+
+            <!-- 10s Forward -->
+            <button type="button" class="player-ctrl-btn" id="btn-player-forward" aria-label="Forward 10 Seconds" title="Forward 10s (Right Arrow)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </button>
+
+            <!-- Volume / Mute -->
+            <div class="volume-control-wrapper">
+              <button type="button" class="player-ctrl-btn" id="btn-player-volume" aria-label="Mute/Unmute" title="Mute/Unmute (M)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon" id="icon-vol-high"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon" id="icon-vol-mute" style="display: none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              </button>
+              <input type="range" class="volume-slider" id="player-volume-slider" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+            </div>
+
+            <!-- Time Display -->
+            <div class="player-time-display">
+              <span id="player-current-time">0:00</span> / <span id="player-duration-time">0:00</span>
+            </div>
+          </div>
+
+          <div class="controls-right">
+            <!-- Next Episode (if Series) -->
+            <button type="button" class="player-ctrl-btn" id="btn-player-next-ep" style="display: none;" title="Next Episode">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ctrl-icon"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/></svg>
+              <span class="ctrl-label">Next Ep</span>
+            </button>
+
+            <!-- Subtitles / CC Toggle -->
+            <button type="button" class="player-ctrl-btn" id="btn-player-cc" title="Subtitles (CC)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H7v6zM15 15h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2v6z"/></svg>
+            </button>
+
+            <!-- Settings (Speed & Quality) -->
+            <div class="player-settings-wrapper">
+              <button type="button" class="player-ctrl-btn" id="btn-player-settings" title="Playback Settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </button>
+              <div class="player-settings-flyout" id="player-settings-menu" style="display: none;">
+                <div class="flyout-title">Playback Speed</div>
+                <div class="speed-options" id="speed-options">
+                  <button type="button" class="speed-opt" data-speed="0.75">0.75x</button>
+                  <button type="button" class="speed-opt active" data-speed="1.0">Normal</button>
+                  <button type="button" class="speed-opt" data-speed="1.25">1.25x</button>
+                  <button type="button" class="speed-opt" data-speed="1.5">1.5x</button>
+                </div>
+                <div class="flyout-divider"></div>
+                <div class="flyout-title">Stream Quality</div>
+                <div class="quality-info">Auto (4K UHD 2160p)</div>
+              </div>
+            </div>
+
+            <!-- Fullscreen -->
+            <button type="button" class="player-ctrl-btn" id="btn-player-fullscreen" aria-label="Toggle Fullscreen" title="Fullscreen (F)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ctrl-icon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 10: SETTINGS & ACCOUNT PREFERENCES (#/settings)
+         ==================================================================== -->
+    <div id="view-settings" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="page-header-block">
+          <h1 class="page-title">Settings &amp; Preferences</h1>
+          <p class="page-subtitle">Configure playback defaults, appearance, and local viewing data</p>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Playback Settings Card -->
+          <div class="settings-card">
+            <h2 class="settings-card-title">Playback Defaults</h2>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Autoplay Next Episode</div>
+                <div class="setting-desc">Automatically begin next serial episode when stream finishes</div>
+              </div>
+              <input type="checkbox" id="setting-autoplay-next" class="toggle-switch" checked>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Autoplay Previews</div>
+                <div class="setting-desc">Preview trailers while browsing titles (Off by default)</div>
+              </div>
+              <input type="checkbox" id="setting-autoplay-previews" class="toggle-switch">
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Default Streaming Quality</div>
+                <div class="setting-desc">Preferred resolution when bandwidth allows</div>
+              </div>
+              <select id="setting-quality" class="filter-select">
+                <option value="auto">Auto (Adaptive 4K / 1080p)</option>
+                <option value="1080p">High (1080p)</option>
+                <option value="720p">Data Saver (720p)</option>
+              </select>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Preferred Subtitle Language</div>
+                <div class="setting-desc">Language track enabled by default</div>
+              </div>
+              <select id="setting-subtitle-lang" class="filter-select">
+                <option value="en">English (Original Audio)</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="off">Off by default</option>
+              </select>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Default Playback Speed</div>
+                <div class="setting-desc">Preferred stream speed</div>
+              </div>
+              <select id="setting-playback-speed" class="filter-select">
+                <option value="1.0">Normal (1.0x)</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="0.75">0.75x</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Appearance & Motion Card -->
+          <div class="settings-card">
+            <h2 class="settings-card-title">Appearance &amp; Accessibility</h2>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Dark Cinema Mode</div>
+                <div class="setting-desc">Default Cinema Charcoal (#111315) and Warm Ivory</div>
+              </div>
+              <span class="badge-active">Active</span>
+            </div>
+            <div class="setting-item">
+              <div>
+                <div class="setting-name">Reduce Motion</div>
+                <div class="setting-desc">Disable scaling animations and carousel transitions</div>
+              </div>
+              <input type="checkbox" id="setting-reduce-motion" class="toggle-switch">
+            </div>
+          </div>
+
+          <!-- Data & Privacy Card -->
+          <div class="settings-card">
+            <h2 class="settings-card-title">Privacy &amp; Data Management</h2>
+            <p class="settings-card-intro">
+              Morrow stores your watchlist, playback timestamps, and recent queries in local browser storage. When account services are deployed, this data will securely sync with Amazon DynamoDB.
+            </p>
+            <div class="data-actions-list">
+              <button type="button" class="btn btn-secondary btn-full" id="btn-clear-search-history">
+                Clear Recent Search History
+              </button>
+              <button type="button" class="btn btn-secondary btn-full" id="btn-clear-watch-progress">
+                Clear Saved Watch Progress
+              </button>
+              <button type="button" class="btn btn-secondary btn-full" id="btn-clear-watchlist">
+                Clear My List
+              </button>
+              <button type="button" class="btn btn-secondary btn-full btn-danger" id="btn-clear-all-data">
+                Reset All Local Library &amp; Watchlist Data
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 11: HELP & TROUBLESHOOTING (#/help)
+         ==================================================================== -->
+    <div id="view-help" class="page-view" style="display: none;">
+      <div class="section-container page-content-container">
+        <div class="page-header-block">
+          <h1 class="page-title">Help &amp; Troubleshooting</h1>
+          <p class="page-subtitle">Frequently asked questions and streaming assistance</p>
+        </div>
+
+        <div class="help-faq-list">
+          <div class="faq-item">
+            <h3 class="faq-question">How does video seeking work without buffering?</h3>
+            <p class="faq-answer">
+              Morrow utilizes <strong>HTTP 206 Partial Content</strong> range requests. When you drag the timeline slider, your browser requests only the exact byte range needed from Amazon CloudFront edge storage, avoiding downloading the entire media file.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">What is Morrow AI Concierge?</h3>
+            <p class="faq-answer">
+              Morrow AI is our conversational entertainment assistant. Instead of traditional keyword searches, you can ask for films by mood, plot themes, or runtimes. It cross-references IMDb ratings and validates titles against our catalogue before recommending them.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">Why is a title marked unavailable?</h3>
+            <p class="faq-answer">
+              Titles appear as unavailable if their cloud media asset is undergoing ingestion or restricted by licensing. Morrow displays an honest unavailable state rather than routing to a broken video stream.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-question">What video formats and audio standards does Morrow support?</h3>
+            <p class="faq-answer">
+              Morrow serves progressive MP4 streaming with H.264/AAC for universal web compatibility, and is designed for HLS adaptive multi-bitrate delivery via CloudFront CDN. Supported audio standards include Dolby Atmos and Dolby Digital 5.1.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 12: PROFILES MANAGEMENT (#/profiles)
+         ==================================================================== -->
+    <div id="view-profiles" class="page-view" style="display: none;">
+      <div class="section-container page-content-container text-center">
+        <div class="page-header-block">
+          <h1 class="page-title">Who's Watching?</h1>
+          <p class="page-subtitle">Select your viewer profile or configure personal preferences</p>
+        </div>
+
+        <div class="profiles-card-grid">
+          <div class="profile-card active" id="profile-active-card" tabindex="0" role="button">
+            <div class="profile-card-avatar">M</div>
+            <h3 class="profile-card-name">Morrow Viewer</h3>
+            <span class="profile-card-status">Active Profile</span>
+          </div>
+
+          <div class="profile-card disabled" id="profile-add-card" tabindex="0">
+            <div class="profile-card-avatar add-avatar">+</div>
+            <h3 class="profile-card-name">Add Profile</h3>
+            <span class="profile-card-status">Arriving with AWS Cognito</span>
+          </div>
+        </div>
+
+        <div class="profile-actions-center">
+          <a href="#/" class="btn btn-primary">Done</a>
+          <a href="#/settings" class="btn btn-secondary">Profile Settings</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 13: 404 NOT FOUND (#/404)
+         ==================================================================== -->
+    <div id="view-not-found" class="page-view" style="display: none;">
+      <div class="section-container page-content-container text-center">
+        <div class="not-found-card">
+          <div class="not-found-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon-lg">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+          <h1 class="page-title">Title or Page Not Found</h1>
+          <p class="page-subtitle">The story or route you are looking for is not in the Morrow catalogue.</p>
+          <div class="not-found-actions">
+            <a href="#/" class="btn btn-primary">Return to Discovery</a>
+            <a href="#/search" class="btn btn-secondary">Search Catalogue</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <a href="#/" class="bottom-nav-link active" data-route="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-nav-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#/movies" class="bottom-nav-link" data-route="movies">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-nav-icon"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/></svg>
+      <span>Explore</span>
+    </a>
+    <a href="#/search" class="bottom-nav-link" data-route="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-nav-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search</span>
+    </a>
+    <a href="#/my-list" class="bottom-nav-link" data-route="my-list">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-nav-icon"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span>My List</span>
+    </a>
+    <a href="#/ai" class="bottom-nav-link" data-route="ai">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-nav-icon"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+      <span>AI</span>
+    </a>
+  </nav>
+
+  <!-- Global Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Confirmation Dialog Modal -->
+  <div class="dialog-backdrop" id="confirm-dialog" style="display: none;" role="dialog" aria-modal="true">
+    <div class="dialog-box">
+      <h3 class="dialog-title" id="dialog-title">Confirm Action</h3>
+      <p class="dialog-msg" id="dialog-msg">Are you sure you want to proceed?</p>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-secondary" id="dialog-cancel-btn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="dialog-confirm-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Site Footer -->
+  <footer class="site-footer">
+    <div class="section-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo footer-logo">
+            <div class="brand-mark" aria-hidden="true">
+              <svg class="brand-mark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="9"/>
+                <polygon points="10,8 16,12 10,16" fill="currentColor"/>
+              </svg>
+            </div>
+            <span class="brand-text">MORROW</span>
+          </div>
+          <p class="footer-tagline">
+            A world of stories. Discover films, series and stories worth staying up for.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#/">Home Discovery</a></li>
+            <li><a href="#/movies">Feature Movies</a></li>
+            <li><a href="#/series">Series &amp; Docuseries</a></li>
+            <li><a href="#/my-list">Personal Library</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Features</h4>
+          <ul class="footer-links">
+            <li><a href="#/search">Catalogue Search</a></li>
+            <li><a href="#/ai">Morrow AI Concierge</a></li>
+            <li><a href="#/settings">Playback Settings</a></li>
+            <li><a href="#/help">Help &amp; FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Morrow Entertainment. All rights reserved. Open sample media licensed for demonstration.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Script (Service Architecture) -->
+  <script src="app.js"></script>
+</body>
+</html>

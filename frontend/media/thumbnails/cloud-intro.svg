@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <radialGradient id="bgGlow" cx="65%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#2D3035" />
+      <stop offset="60%" stop-color="#181A1D" />
+      <stop offset="100%" stop-color="#111315" />
+    </radialGradient>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C87552" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#73422F" stop-opacity="0.4" />
+    </linearGradient>
+    <linearGradient id="overlay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#111315" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bgGlow)" />
+
+  <!-- Grid lines for cinematic sci-fi texture -->
+  <g stroke="#343638" stroke-width="1" stroke-opacity="0.35">
+    <line x1="0" y1="180" x2="1280" y2="180" />
+    <line x1="0" y1="360" x2="1280" y2="360" />
+    <line x1="0" y1="540" x2="1280" y2="540" />
+    <line x1="320" y1="0" x2="320" y2="720" />
+    <line x1="640" y1="0" x2="640" y2="720" />
+    <line x1="960" y1="0" x2="960" y2="720" />
+  </g>
+
+  <!-- Abstract Orbit / Neural Nodes -->
+  <g transform="translate(680, 180)">
+    <!-- Circuit lines -->
+    <path d="M -150 160 L 50 160 L 120 70 L 300 70" stroke="#C87552" stroke-width="2.5" fill="none" opacity="0.6" />
+    <path d="M -80 230 L 120 230 L 180 150 L 350 150" stroke="#A8A49E" stroke-width="1.5" stroke-dasharray="6,6" fill="none" opacity="0.4" />
+
+    <!-- Stylized Cloud / Core Outline -->
+    <path d="M 60,180 a 60,60 0 0,1 110,-24 a 70,70 0 0,1 130,24 a 50,50 0 0,1 -10,95 l -210,0 a 48,48 0 0,1 -20,-95 z"
+          fill="url(#cloudGrad)" opacity="0.85" />
+    
+    <!-- Nodes -->
+    <circle cx="50" cy="160" r="6" fill="#F2EEE8" />
+    <circle cx="120" cy="70" r="6" fill="#C87552" />
+    <circle cx="300" cy="70" r="6" fill="#F2EEE8" />
+  </g>
+
+  <!-- Film Overlay Vignette -->
+  <rect width="1280" height="720" fill="url(#overlay)" />
+
+  <!-- Entertainment Typography & Badges -->
+  <rect x="70" y="460" width="140" height="26" rx="4" fill="#C87552" />
+  <text x="140" y="478" font-family="'Inter', -apple-system, sans-serif" font-size="12" font-weight="700" fill="#F2EEE8" text-anchor="middle" letter-spacing="1.5">SCI-FI THRILLER</text>
+  
+  <text x="70" y="530" font-family="'Inter', -apple-system, sans-serif" font-size="44" font-weight="700" fill="#F2EEE8" letter-spacing="-0.5">The Cloud Paradox</text>
+  <text x="70" y="575" font-family="'Inter', -apple-system, sans-serif" font-size="20" font-weight="400" fill="#A8A49E">When the Orbital Relay Network Awakens</text>
+
+  <rect x="70" y="615" width="70" height="24" rx="4" fill="#1C1E20" stroke="#343638" />
+  <text x="105" y="632" font-family="'Inter', -apple-system, sans-serif" font-size="12" font-weight="600" fill="#A8A49E" text-anchor="middle">4K UHD</text>
+  <text x="160" y="632" font-family="'Inter', -apple-system, sans-serif" font-size="14" fill="#A8A49E">2026 • 0:45 • Dolby Atmos • Morrow Original</text>
+</svg>

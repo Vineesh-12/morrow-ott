@@ -1,0 +1,26 @@
+{
+  "name": "morrow-ott-platform",
+  "version": "2.0.0",
+  "description": "Morrow — Design and Implementation of a Cloud-Based Video Streaming Platform",
+  "main": "frontend/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node frontend/server.js",
+    "validate": "node scripts/validate-catalogue.mjs",
+    "manifest": "node scripts/generate-asset-manifest.mjs",
+    "test": "node scripts/test-catalogue.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "keywords": [
+    "morrow",
+    "ott",
+    "streaming",
+    "cloud-computing",
+    "aws",
+    "s3",
+    "cloudfront",
+    "dynamodb"
+  ],
+  "author": "Morrow Engineering",
+  "license": "UNLICENSED"
+}
