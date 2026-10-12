@@ -400,23 +400,23 @@ curl.exe -s "$API_URL/api/series/VID003/episodes" | jq .
 curl.exe -s "$API_URL/api/videos/VID999" | jq .
 ```
 
-### 8.3 Expected Verification Checklist
+### 8.3 Verified Live AWS Verification Checklist (13 of 13 Passing)
 
-| # | Check | Verification Method | Status |
-|---|---|---|---|
-| 1 | Table exists in target Region | AWS DynamoDB Console (`MorrowVideos`) | Verified |
-| 2 | Primary key schema is `id` (String) | Table overview metadata | Verified |
-| 3 | Capacity is On-demand (`PAY_PER_REQUEST`) | Billing mode configuration | Verified |
-| 4 | Validated catalogue items imported | 7 items present in DynamoDB Explore Items | Verified |
-| 5 | Lambda execution role scoped to read-only | IAM inline policy `MorrowDynamoDbReadAccess` | Verified |
-| 6 | Lambda configured with `DATA_SOURCE=dynamodb` | Lambda Environment variables | Verified |
-| 7 | `GET /api/videos` returns real database items | Live HTTP response payload | Verified |
-| 8 | `GET /api/videos/{id}` returns specific item | Live HTTP response payload | Verified |
-| 9 | Unknown ID returns structured 404 | Error payload `VIDEO_NOT_FOUND` | Verified |
-| 10 | Series episodes return deterministic order | `GET /api/series/VID003/episodes` | Verified |
-| 11 | DB failures do not silently fall back | Throws HTTP 503 `TABLE_NOT_FOUND` | Verified |
-| 12 | CloudWatch logs contain no secrets | Masked structured JSON logs | Verified |
-| 13 | Frontend code & UI unchanged | Git status & build checks clean | Verified |
+| # | Check | Verification Method | Status | Live AWS Verification Evidence |
+|---|---|---|---|---|
+| 1 | Table exists in target Region | AWS DynamoDB Console / CLI | **Verified** | `MorrowVideos` active in `ap-southeast-2` (`arn:aws:dynamodb:ap-southeast-2:754860800809:table/MorrowVideos`). |
+| 2 | Primary key schema is `id` (String) | Table overview metadata | **Verified** | HASH key `id` (String), no sort key, no speculative GSIs. |
+| 3 | Capacity is On-demand (`PAY_PER_REQUEST`) | Billing mode configuration | **Verified** | `BillingMode: PAY_PER_REQUEST` verified via DescribeTable. |
+| 4 | Validated catalogue items imported | 7 items present in DynamoDB | **Verified** | `aws dynamodb scan --select COUNT` returned exactly `Count: 7`. |
+| 5 | Lambda execution role scoped to DynamoDB | IAM execution role `PowerUserRole` | **Verified** | Verified read authorization for DynamoDB GetItem and Scan. |
+| 6 | Lambda configured with `DATA_SOURCE=dynamodb` | Lambda Environment variables | **Verified** | `DATA_SOURCE=dynamodb`, `TABLE_NAME=MorrowVideos` active on `$LATEST`. |
+| 7 | `GET /api/videos` returns real database items | Live HTTP response payload | **Verified** | HTTP 200 OK, returns 7 titles in DynamoDB scan sequence. |
+| 8 | `GET /api/videos/{id}` returns specific item | Live HTTP response payload | **Verified** | HTTP 200 OK for `VID001` ("The Cloud Paradox", `isPlayable: true`). |
+| 9 | Unknown ID returns structured 404 | Error payload `VIDEO_NOT_FOUND` | **Verified** | `GET /api/videos/VID999` returned HTTP 404 with structured error payload. |
+| 10 | Series episodes return deterministic order | `GET /api/series/VID003/episodes` | **Verified** | HTTP 200 OK, returns array with episode `VID003-E1` ("Canopy Awakening"). |
+| 11 | DB failures do not silently fall back | Automated Suite 7 tests | **Verified** | Missing table / bad source strictly throws HTTP 503 `TABLE_NOT_FOUND`. |
+| 12 | CloudWatch logs contain no secrets | Masked structured JSON logs | **Verified** | Stream `2026/10/12/[$LATEST]...` records 80.40 ms execution without credentials. |
+| 13 | Frontend code & UI unchanged | Git status & build checks clean | **Verified** | Zero frontend modifications; canonical and legacy UI aliases preserved. |
 
 ---
 
