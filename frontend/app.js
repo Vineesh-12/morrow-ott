@@ -351,10 +351,30 @@ let MORROW_CATALOGUE = [
  * Resolves local dev paths now, CloudFront CDN distribution paths later.
  */
 const mediaService = {
+  /**
+   * Resolves a media key to a clean same-origin relative URL.
+   * Maps legacy local prefixes ('media/thumbnails/', 'media/videos/') to canonical
+   * S3 CloudFront prefixes ('posters/', 'videos/'), preserving custom URLs.
+   * @param {string} key - e.g. "media/videos/cloud-intro.mp4" or "posters/cloud-intro.svg"
+   * @returns {string} Relative URL for CloudFront delivery
+   */
   resolveUrl(key) {
     if (!key) return '';
-    if (key.startsWith('http://') || key.startsWith('https://')) return key;
-    return key.replace(/^\/+/, '');
+    if (key.startsWith('http://') || key.startsWith('https://') || key.startsWith('data:')) {
+      return key;
+    }
+    let clean = key.replace(/^\/+/, '');
+
+    // Canonical S3 key resolution for CloudFront distribution
+    if (clean.startsWith('media/thumbnails/')) {
+      clean = clean.replace('media/thumbnails/', 'posters/');
+    } else if (clean.startsWith('media/videos/')) {
+      clean = clean.replace('media/videos/', 'videos/');
+    } else if (clean.startsWith('media/subtitles/')) {
+      clean = clean.replace('media/subtitles/', 'subtitles/');
+    }
+
+    return clean;
   },
   
   createPosterPlaceholderSvg(title) {
@@ -366,21 +386,41 @@ const mediaService = {
 /**
  * Catalogue Service
  * Accesses title records, genres, search queries, and details.
+ * Connects to live /api/videos with defensive error handling (no silent fixture fallback in production).
  */
 const catalogueService = {
+  apiStatus: 'idle', // 'idle' | 'loading' | 'success' | 'error'
+  apiError: null,
+
   async loadFromApi() {
+    this.apiStatus = 'loading';
+    this.apiError = null;
     try {
       const res = await fetch('/api/videos');
       if (res.ok) {
-        const data = await res.json();
-        const list = Array.isArray(data) ? data : (data.data || data.videos || []);
-        if (list.length > 0) {
+        const payload = await res.json();
+        const list = Array.isArray(payload) ? payload : (payload.data || payload.videos || []);
+        if (Array.isArray(list) && list.length > 0) {
           MORROW_CATALOGUE.length = 0;
           MORROW_CATALOGUE.push(...list);
+          this.apiStatus = 'success';
+          return { success: true, count: list.length };
         }
+      } else {
+        const errBody = await res.text().catch(() => '');
+        throw new Error(`Catalogue API returned HTTP ${res.status}: ${errBody || res.statusText}`);
       }
-    } catch {
-      // In static / file:// mode, MORROW_CATALOGUE embedded fixture is already loaded
+    } catch (err) {
+      this.apiStatus = 'error';
+      this.apiError = err.message;
+      console.warn('Backend Catalogue API unavailable:', err.message);
+
+      // In deployed web production, do NOT silently mask backend failure with mock data
+      const isLocalFileMode = window.location.protocol === 'file:';
+      if (!isLocalFileMode && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        MORROW_CATALOGUE.length = 0;
+      }
+      return { success: false, error: err.message };
     }
   },
   async getAll() {

@@ -108,6 +108,21 @@ const server = http.createServer((req, res) => {
     filePath = path.join(MEDIA_DIR, safePath);
   }
 
+  // If path starts with canonical CloudFront / S3 prefixes (/posters/, /backdrops/, /videos/, /subtitles/)
+  if (!fs.existsSync(filePath)) {
+    const filename = path.basename(safePath);
+    if (safePath.startsWith('/posters/') || safePath.startsWith('/backdrops/')) {
+      const candidate = path.join(PROJECT_DIR, 'media', 'thumbnails', filename);
+      if (fs.existsSync(candidate)) filePath = candidate;
+    } else if (safePath.startsWith('/videos/')) {
+      const candidate = path.join(PROJECT_DIR, 'media', 'videos', filename);
+      if (fs.existsSync(candidate)) filePath = candidate;
+    } else if (safePath.startsWith('/subtitles/')) {
+      const candidate = path.join(PROJECT_DIR, 'media', 'subtitles', filename);
+      if (fs.existsSync(candidate)) filePath = candidate;
+    }
+  }
+
   // Check if file exists
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     res.writeHead(404, { 'Content-Type': 'text/plain' });

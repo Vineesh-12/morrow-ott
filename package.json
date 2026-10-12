@@ -9,11 +9,12 @@
     "validate": "node scripts/validate-catalogue.mjs",
     "manifest": "node scripts/generate-asset-manifest.mjs",
     "s3:plan": "node scripts/s3-upload-plan.mjs",
-    "test": "node scripts/test-catalogue.mjs && node scripts/test-backend-api.mjs && node scripts/test-dynamodb-repository.mjs",
+    "test": "node scripts/test-catalogue.mjs && node scripts/test-backend-api.mjs && node scripts/test-dynamodb-repository.mjs && node scripts/test-phase-6-cloudfront.mjs",
     "backend:test": "node scripts/test-backend-api.mjs",
     "backend:package": "node scripts/package-lambda.mjs",
     "dynamodb:test": "node scripts/test-dynamodb-repository.mjs",
     "dynamodb:import": "node scripts/import-catalogue-dynamodb.mjs",
+    "cloudfront:test": "node scripts/test-phase-6-cloudfront.mjs",
     "build": "node scripts/build.mjs"
   },
   "keywords": [

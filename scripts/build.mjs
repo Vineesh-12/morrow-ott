@@ -71,6 +71,21 @@ try {
   const ddbItems = prepareDynamoDbItems();
   console.log(`   ✓ DynamoDB item preparation verified (${ddbItems.length} candidate items with valid partition keys, 0 errors).`);
 
+  // Step 7: Build & Stage Production Frontend Artifacts for S3 (Phase 6)
+  console.log('\n7. Building & Staging Production Frontend Artifacts for S3 (Phase 6)...');
+  const distFrontendDir = path.join(ROOT_DIR, 'dist', 'frontend');
+  fs.mkdirSync(distFrontendDir, { recursive: true });
+
+  const frontendFiles = ['index.html', 'styles.css', 'app.js'];
+  for (const file of frontendFiles) {
+    const src = path.join(ROOT_DIR, 'frontend', file);
+    const dest = path.join(distFrontendDir, file);
+    fs.copyFileSync(src, dest);
+    const size = fs.statSync(dest).size;
+    console.log(`   ✓ Staged dist/frontend/${file} (${(size / 1024).toFixed(1)} KB)`);
+  }
+  console.log('   ✓ Production frontend build ready for S3 root upload (3 core assets).');
+
   console.log('\n======================================================');
   console.log('  Morrow OTT — Verification Build Completed Successfully');
   console.log('======================================================');

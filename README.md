@@ -3,12 +3,11 @@
 > **Premium OTT Entertainment Platform**  
 > *Cloud Computing FT-III Academic Assessment (Course Code: 21CSE362T)*
 
-[![Tests](https://img.shields.io/badge/Tests-142%20Passed-brightgreen)](file:///scripts/test-dynamodb-repository.mjs)
+[![Tests](https://img.shields.io/badge/Tests-168%20Passed-brightgreen)](file:///scripts/test-phase-6-cloudfront.mjs)
 [![Validation](https://img.shields.io/badge/Validation-16%2F16%20Rules%20Passing-blue)](file:///scripts/validate-catalogue.mjs)
-[![Phase 3](https://img.shields.io/badge/Phase%203-Amazon%20S3%20Live%20Verified-brightgreen)](file:///docs/s3-asset-architecture.md)
-[![Phase 4](https://img.shields.io/badge/Phase%204-Lambda%20%26%20API%20Gateway%20Ready-brightgreen)](file:///docs/backend-api-architecture.md)
-[![Phase 5](https://img.shields.io/badge/Phase%205-DynamoDB%20Integration%20Ready-brightgreen)](file:///docs/dynamodb-catalogue-architecture.md)
-[![AWS Region](https://img.shields.io/badge/AWS%20Region-ap--southeast--2%20(Sydney)-purple)](file:///docs/dynamodb-catalogue-architecture.md)
+[![Phase 6 Live](https://img.shields.io/badge/Phase%206-CloudFront%20Live%20Deployed-brightgreen)](https://d10on8fmafqm1i.cloudfront.net)
+[![CloudFront](https://img.shields.io/badge/CloudFront-d10on8fmafqm1i.cloudfront.net-orange)](https://d10on8fmafqm1i.cloudfront.net)
+[![AWS Region](https://img.shields.io/badge/AWS%20Region-ap--southeast--2%20(Sydney)-purple)](file:///docs/phase-6-cloudfront-deployment.md)
 [![Runtime](https://img.shields.io/badge/Runtime-Node.js%2024.x%20%2F%2020.x%20ESM-green)](file:///backend/index.mjs)
 
 ---
@@ -17,14 +16,14 @@
 
 **Morrow** is a cinema-inspired Over-The-Top (OTT) media streaming web application designed to demonstrate a complete, production-grade cloud streaming architecture. Built with an editorial dark theme (charcoal `#111315`, deep slate `#1C1E20`, warm ivory `#F2EEE8`, and muted copper `#C87552`), Morrow delivers seamless video browsing, episode exploration, responsive native playback, watchlist tracking, and an AI-assisted entertainment concierge grounded in verified catalogue metadata.
 
-### Target AWS Architecture
-- **Amazon S3**: Private object storage for media assets (`posters/`, `backdrops/`, `videos/`, `subtitles/`).
-- **Amazon CloudFront**: Global Content Delivery Network (CDN) with Origin Access Control (OAC) for secure, low-latency streaming.
-- **Amazon API Gateway**: HTTP API routing requests to backend microservices.
-- **AWS Lambda (Node.js)**: Serverless compute executing catalogue queries and business logic.
-- **Amazon DynamoDB (`MorrowVideos`)**: Serverless NoSQL database storing catalogue records, seasons, and episodes.
-- **Amazon CloudWatch**: End-to-end diagnostics, structured logs, and metrics.
-- **Morrow AI Concierge**: Catalogue-grounded AI discovery assistant.
+### Live Production Deployment
+- **Global CloudFront URL**: **[`https://d10on8fmafqm1i.cloudfront.net`](https://d10on8fmafqm1i.cloudfront.net)**
+- **CloudFront Distribution ID**: `E3CQS64ZH2JAM1`
+- **Origin Access Control (OAC)**: `E3STZ204UN3KSM` (`MorrowS3Oac`, SigV4 signing)
+- **API Gateway HTTP API**: `https://2wz1iej67d.execute-api.ap-southeast-2.amazonaws.com`
+- **AWS Lambda Function**: `MorrowCatalogApi` (Node.js 24.x / 20.x ESM, `index.handler`)
+- **Amazon DynamoDB Table**: `MorrowVideos` (On-Demand `PAY_PER_REQUEST`, 7 records)
+- **Private Amazon S3 Bucket**: `morrow-assets-vineesh-21cse362t` (`ap-southeast-2`, Block All Public Access enabled)
 
 ---
 
@@ -33,7 +32,7 @@
 ### Phase 2: Catalogue & Data Design
 1. **Frontend Audit**: Inspected existing routes, HTML5 video player, `localStorage` watch history, and media paths.
 2. **Canonical Data Model**: Authoritative TypeScript/JSON schemas for movies, series, seasons, and episodes.
-3. **Truth-in-Availability**: A strict availability engine ensuring titles are marked playable **only** when media assets exist and are verified on disk.
+3. **Truth-in-Availability**: Strict availability engine ensuring titles are marked playable **only** when media assets exist and are verified on disk.
 4. **Catalogue Normalizer & Adapter**: Backward-compatible layer (`data/catalogue-adapter.js`) preserving all legacy UI properties (`videoId`, `category`, `episodes`) while enforcing the canonical schema.
 5. **Asset Manifest Generator**: Automated scanner (`scripts/generate-asset-manifest.mjs`) tracking 29 media assets (24 verified local, 5 planned remote).
 6. **Automated Integrity Validator**: 16-point validator (`scripts/validate-catalogue.mjs`) ensuring zero duplicate IDs, valid durations, non-empty genres, and intact relationships.
@@ -64,8 +63,17 @@
 5. **Zero Silent Fallback**: Verified that missing tables, IAM permission denials, or throttling strictly return HTTP 503 `DatabaseError` without exposing credentials or falling back to mock fixtures.
 6. **Catalogue Migration & Import Tooling**: Created repeatable script (`scripts/import-catalogue-dynamodb.mjs`) supporting default `--dry-run` inspection and live `--execute` batch writing.
 7. **Least-Privilege IAM Policy**: Formulated strict read-only execution policy (`dynamodb:GetItem`, `dynamodb:Scan`, `dynamodb:DescribeTable`) scoped solely to `MorrowVideos`.
-8. **142 Automated Tests**: Comprehensive test coverage across catalogue rules, API endpoints, and mock DocumentClient operations with zero failures.
-9. **Authoritative Architecture Guide**: Complete operational runbook in [`docs/dynamodb-catalogue-architecture.md`](docs/dynamodb-catalogue-architecture.md).
+8. **Live Cloud Migration**: 7 canonical items successfully populated into live AWS DynamoDB table `MorrowVideos` in `ap-southeast-2`.
+
+### Phase 6: Amazon CloudFront Deployment & Frontend Integration (Completed & Live)
+1. **Dual-Origin Global Architecture**: Created a single Amazon CloudFront CDN distribution (`E3CQS64ZH2JAM1`) unifying the static SPA, media assets, and backend API under one HTTPS domain (`https://d10on8fmafqm1i.cloudfront.net`).
+2. **Origin Access Control (OAC)**: Replaced legacy OAI with AWS-recommended OAC (`E3STZ204UN3KSM`, SigV4 signing). Attached a strict bucket policy to `morrow-assets-vineesh-21cse362t` granting `s3:GetObject` solely to CloudFront distribution `E3CQS64ZH2JAM1`. Block All Public Access remains enabled; direct S3 access returns HTTP 403 Forbidden.
+3. **Same-Origin Relative Routing (Zero CORS)**: Refactored frontend API calls to use relative same-origin paths (`/api/health`, `/api/videos`, `/api/videos/{id}`). Both UI and API reside on the same CloudFront host, completely eliminating cross-origin overhead and preflight requests.
+4. **CloudFront Function for SPA Client-Side Routing**: Authored, published, and associated `MorrowSpaRouter` CloudFront Function (`scripts/cf-spa-function.js`) to viewer-request on the default S3 behavior. Extensionless SPA deep links (such as `/title/VID001` or `/my-list`) are rewritten to `/index.html` while preserving file requests (`.svg`, `.mp4`, `.css`, `.js`).
+5. **Dynamic Media Key Resolution**: Enhanced `mediaService.resolveUrl` to deterministically map canonical media keys (`posters/*`, `videos/*`, `backdrops/*`) to CloudFront root paths, safely handling legacy paths without creating duplicate slashes or false playable URLs.
+6. **Zero Silent Mock Fallback**: Production frontend renders a clear error banner with a retry button on API failure instead of silently substituting mock fixtures.
+7. **Automated Test Suite (168 Tests Total)**: Authored 26 Phase 6 tests (`scripts/test-phase-6-cloudfront.mjs`) covering URL mappings, SPA rewriting, secrets auditing, and distribution specifications. All 168 tests pass with zero failures.
+8. **Deployment Guide & Automation**: Complete runbook in [`docs/phase-6-cloudfront-deployment.md`](docs/phase-6-cloudfront-deployment.md) documenting S3 root asset staging, CloudFront dual-origin setup, cache policies, and cache invalidation workflows.
 
 ---
 
@@ -84,9 +92,9 @@ The development catalogue is maintained in [`data/catalogue.json`](data/catalogu
 | `VID007` | *The Quantum Rift* | Series | `coming_soon` | `videos/quantum-rift-e1.mp4` (Scheduled) | 8.5 |
 
 ### Availability State System
-- **`available`**: Video file verified on disk. Playback is fully enabled.
-- **`metadata_only`**: Information exists in the catalogue; cloud video upload pending. Playback is blocked with an informative message.
-- **`coming_soon`**: Title scheduled for future release. Player is disabled with a "Coming Soon" badge.
+- **`available`**: Video file verified on disk and S3. Native HTML5 playback is fully enabled.
+- **`metadata_only`**: Information exists in the catalogue; video upload pending. Playback blocked with descriptive banner.
+- **`coming_soon`**: Title scheduled for future release. Player disabled with a "Coming Soon" badge.
 - **`unavailable`**: Inactive title; cannot be streamed.
 
 ---
@@ -115,12 +123,17 @@ morrow-ott/
 │   ├── catalogue-adapter.js        # Normalizer & S3 key mapping adapter
 │   └── asset-manifest.json         # Automated asset manifest with S3 metadata (29 entries)
 ├── dist/
+│   ├── frontend/                   # Staged production SPA build for S3 bucket root
+│   │   ├── index.html              # Clean single-page application entry point
+│   │   ├── styles.css              # Editorial brand styles
+│   │   └── app.js                  # Frontend client with relative API routing
 │   └── morrow-backend-lambda.zip   # Generated AWS Lambda deployment package (~18.75 KB)
 ├── docs/
 │   ├── catalogue-data-design.md    # Phase 2 canonical data model & schema spec
 │   ├── s3-asset-architecture.md    # Phase 3 S3 asset architecture & AWS Console runbook
 │   ├── backend-api-architecture.md # Phase 4 Lambda API architecture & AWS deployment guide
-│   └── dynamodb-catalogue-architecture.md # Phase 5 DynamoDB architecture & migration guide
+│   ├── dynamodb-catalogue-architecture.md # Phase 5 DynamoDB architecture & migration guide
+│   └── phase-6-cloudfront-deployment.md  # Phase 6 CloudFront CDN & frontend integration guide
 ├── frontend/
 │   ├── index.html                  # Cinema-first single-page app (SPA)
 │   ├── styles.css                  # Custom styling (brand colors, layout, player)
@@ -131,18 +144,22 @@ morrow-ott/
 │   ├── videos/                     # MP4 video files
 │   └── thumbnails/                 # SVG artwork posters
 ├── scripts/
+│   ├── build.mjs                   # Verification build & frontend staging pipeline
+│   ├── package-lambda.mjs          # AWS Lambda deployment packager
 │   ├── generate-asset-manifest.mjs # Scans media and outputs asset-manifest.json
 │   ├── s3-upload-plan.mjs          # Phase 3 S3 dry-run planner & AWS CLI commands
+│   ├── import-catalogue-dynamodb.mjs# Phase 5 DynamoDB catalogue migration & import tool
 │   ├── validate-catalogue.mjs      # 16-rule automated catalogue validator
 │   ├── test-catalogue.mjs          # 33-test catalogue integrity suite
 │   ├── test-backend-api.mjs        # 69-test backend Lambda API & isolation suite
 │   ├── test-dynamodb-repository.mjs# 40-test DynamoDB mock repository suite
-│   ├── import-catalogue-dynamodb.mjs# Phase 5 DynamoDB catalogue migration & import tool
-│   ├── package-lambda.mjs          # AWS Lambda deployment packager
-│   └── build.mjs                   # Verification build pipeline
+│   ├── test-phase-6-cloudfront.mjs # 26-test CloudFront integration & SPA router suite
+│   ├── cf-spa-function.js          # CloudFront Function for SPA deep-link routing
+│   ├── cloudfront-distribution.json# Dual-origin CloudFront distribution specification
+│   └── s3-oac-policy.json          # Private S3 bucket policy for CloudFront OAC
 ├── .gitignore                      # Git ignore file (ignores large videos & AWS creds)
 ├── package.json                    # Root manifest and npm script runner
-└── README.md                       # Project documentation
+└── README.md                       # Authoritative project documentation
 ```
 
 ---
@@ -152,69 +169,61 @@ morrow-ott/
 ### Prerequisites
 - Node.js (v18+ recommended, tested on v22)
 
-### 1. Start the Development Server
+### 1. Start the Local Development Server
 ```bash
 npm start
 ```
 Starts the local development server at **`http://localhost:3000`** with integrated Lambda backend routing (`/api/*`).
 
-### 2. Run the Complete Test Suite (142 Tests)
+### 2. Run the Complete Test Suite (168 Tests)
 ```bash
 npm test
 ```
-Executes all three test suites:
-- 33 catalogue & manifest tests (`test-catalogue.mjs`)
-- 69 backend Lambda API & defensive isolation tests (`test-backend-api.mjs`)
-- 40 DynamoDB DocumentClient repository tests (`test-dynamodb-repository.mjs`)
+Executes all four automated test suites with 100% pass rate:
+- **33 tests**: Catalogue & manifest validation (`test-catalogue.mjs`)
+- **69 tests**: Backend Lambda API & defensive isolation (`test-backend-api.mjs`)
+- **40 tests**: DynamoDB DocumentClient repository operations (`test-dynamodb-repository.mjs`)
+- **26 tests**: Phase 6 CloudFront integration, SPA rewriting & media URLs (`test-phase-6-cloudfront.mjs`)
 
-### 3. Run DynamoDB Repository Tests Only
+### 3. Run Phase 6 CloudFront Tests Only
 ```bash
-npm run dynamodb:test
+npm run test:cloudfront
 ```
-Runs 40 automated tests verifying `GetItem`, `Scan`, filters, series episode ordering, and AWS SDK exception shielding.
+Runs 26 automated tests verifying media key resolution, SPA route rewriting, secret auditing, and CloudFront distribution specifications.
 
-### 4. Run Catalogue Import Dry-Run
-```bash
-npm run dynamodb:import
-```
-Validates the canonical catalogue and previews the 7 DynamoDB items to be written without modifying cloud resources.
-
-### 5. Package AWS Lambda Deployment Artifact
-```bash
-npm run backend:package
-```
-Generates and inspects `dist/morrow-backend-lambda.zip` (~18.75 KB) ready for AWS Lambda upload.
-
-### 6. Run Verification Build
+### 4. Build & Stage Production Frontend
 ```bash
 npm run build
 ```
-Executes the full pipeline: catalogue validation, manifest generation, static frontend check, S3 upload verification, Lambda packaging, and DynamoDB import readiness.
+Executes the full pipeline: catalogue validation, manifest generation, static frontend check, S3 upload verification, Lambda packaging, and stages production frontend assets into `dist/frontend/` ready for S3 root upload.
 
 ---
 
-## 6. Finalized DynamoDB Schema (`MorrowVideos`)
+## 6. CloudFront Verification Matrix
 
-For the Phase 5 AWS deployment, the canonical schema maps to a simple, cost-effective primary key design:
-
-- **Table Name**: `MorrowVideos`
-- **Partition Key (PK)**: `id` (String) — e.g. `VID001` through `VID007`
-- **Sort Key**: *None*
-- **Capacity Mode**: `PAY_PER_REQUEST` (On-Demand)
-- **Secondary Indexes**: *None* (Controlled scan across 7 items consumes exactly 1 RRU)
-- **Embedded Document Design**: Series records store full `seasons` and `episodes` arrays directly in the item, allowing deterministic single-query episode resolution without multi-table joins.
+| Endpoint | Method | Destination / Origin | Expected Result | Live Status |
+|---|---|---|---|---|
+| `https://d10on8fmafqm1i.cloudfront.net/` | `GET` | S3 Origin (via OAC) | Serves `index.html` (HTTP 200) | **Verified (200 OK)** |
+| `https://d10on8fmafqm1i.cloudfront.net/api/health` | `GET` | API Gateway -> Lambda | `{"success":true,"data":{"status":"ok"}}` | **Verified (200 OK)** |
+| `https://d10on8fmafqm1i.cloudfront.net/api/videos` | `GET` | API Gateway -> Lambda -> DynamoDB | 7 catalogue items JSON | **Verified (200 OK)** |
+| `https://d10on8fmafqm1i.cloudfront.net/api/videos/VID001` | `GET` | API Gateway -> Lambda -> DynamoDB | Title details for *The Cloud Paradox* | **Verified (200 OK)** |
+| `https://d10on8fmafqm1i.cloudfront.net/posters/cloud-intro.svg` | `GET` | S3 Origin (via OAC) | SVG poster image | **Verified (200 OK)** |
+| `https://d10on8fmafqm1i.cloudfront.net/videos/cloud-intro.mp4` | `GET` | S3 Origin (via OAC) | MP4 video byte-stream | **Verified (200 OK)** |
+| `https://d10on8fmafqm1i.cloudfront.net/title/VID001` | `GET` | CloudFront Function -> S3 `/index.html` | SPA entry point on refresh | **Verified (200 OK)** |
+| `https://morrow-assets-vineesh-21cse362t.s3.../index.html` | `GET` | Direct Amazon S3 | Access Denied | **Verified (403 Forbidden)** |
 
 ---
 
-## 7. Next Step: Phase 6 (Amazon CloudFront & Full Integration)
+## 7. Next Step: Phase 7 (Amazon Cognito Authentication & User Profiles)
 
-1. **Amazon CloudFront Distribution**:
-   - Establish CloudFront distribution as the main public entry point for the Morrow OTT platform.
-   - Configure Origin Access Control (OAC) to securely serve private S3 media assets and frontend SPA files.
-2. **Unified API Gateway Origin**:
-   - Route `/api/*` requests through CloudFront to Amazon API Gateway (`MorrowHttpApi`), eliminating CORS overhead.
-3. **End-to-End Playback**:
-   - Stream cloud video assets seamlessly from CloudFront CDN using metadata retrieved dynamically from Amazon DynamoDB.
+1. **Amazon Cognito User Pool & App Client**:
+   - Establish managed authentication for user registration, email verification, and secure JWT issuance.
+2. **Authenticated API Gateway Routes**:
+   - Secure personal user actions (`POST /api/user/watchlist`, `POST /api/user/progress`) using Cognito JWT authorizer.
+3. **Multi-User DynamoDB Persistence**:
+   - Introduce user-scoped tables (`MorrowUsers`, `MorrowWatchlist`) for cloud-persisted cross-device watch history.
+4. **CloudFront Signed URLs / Cookies (Protected Media)**:
+   - Restrict full-length video playback URLs to authenticated, active sessions using CloudFront signed cookies.
 
 ---
 

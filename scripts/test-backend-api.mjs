@@ -330,8 +330,9 @@ async function runTests() {
     const badSourceBody = JSON.parse(badSourceRes.body);
     assert(badSourceBody.error.code === 'DATA_SOURCE_UNAVAILABLE', 'Error code is DATA_SOURCE_UNAVAILABLE');
 
-    // Test DynamoDB mode without local database credentials (asserts NO silent fallback to fixture)
+    // Test DynamoDB mode with missing table (asserts NO silent fallback to fixture)
     process.env.DATA_SOURCE = 'dynamodb';
+    process.env.TABLE_NAME = 'NonExistentTable_12345';
     resetRepositoryInstance();
 
     const ddbEvent = createHttpApiV2Event({ method: 'GET', rawPath: '/api/videos' });
@@ -344,8 +345,9 @@ async function runTests() {
       `Error code indicates database failure (${ddbBody.error.code}) and never silent fixture fallback`
     );
 
-    // Reset back to fixture for local dev safety
+    // Reset back to fixture and real table name for local dev safety
     process.env.DATA_SOURCE = 'fixture';
+    process.env.TABLE_NAME = 'MorrowVideos';
     resetRepositoryInstance();
   }
 
