@@ -3,11 +3,12 @@
 > **Premium OTT Entertainment Platform**  
 > *Cloud Computing FT-III Academic Assessment (Course Code: 21CSE362T)*
 
-[![Tests](https://img.shields.io/badge/Tests-100%20Passed-brightgreen)](file:///scripts/test-backend-api.mjs)
+[![Tests](https://img.shields.io/badge/Tests-142%20Passed-brightgreen)](file:///scripts/test-dynamodb-repository.mjs)
 [![Validation](https://img.shields.io/badge/Validation-16%2F16%20Rules%20Passing-blue)](file:///scripts/validate-catalogue.mjs)
 [![Phase 3](https://img.shields.io/badge/Phase%203-Amazon%20S3%20Live%20Verified-brightgreen)](file:///docs/s3-asset-architecture.md)
-[![Phase 4](https://img.shields.io/badge/Phase%204-Lambda%20%26%20API%20Gateway%20Ready-blueviolet)](file:///docs/backend-api-architecture.md)
-[![AWS Region](https://img.shields.io/badge/AWS%20Region-ap--southeast--2%20(Sydney)-purple)](file:///docs/backend-api-architecture.md)
+[![Phase 4](https://img.shields.io/badge/Phase%204-Lambda%20%26%20API%20Gateway%20Ready-brightgreen)](file:///docs/backend-api-architecture.md)
+[![Phase 5](https://img.shields.io/badge/Phase%205-DynamoDB%20Integration%20Ready-brightgreen)](file:///docs/dynamodb-catalogue-architecture.md)
+[![AWS Region](https://img.shields.io/badge/AWS%20Region-ap--southeast--2%20(Sydney)-purple)](file:///docs/dynamodb-catalogue-architecture.md)
 [![Runtime](https://img.shields.io/badge/Runtime-Node.js%2024.x%20%2F%2020.x%20ESM-green)](file:///backend/index.mjs)
 
 ---
@@ -21,13 +22,13 @@
 - **Amazon CloudFront**: Global Content Delivery Network (CDN) with Origin Access Control (OAC) for secure, low-latency streaming.
 - **Amazon API Gateway**: HTTP API routing requests to backend microservices.
 - **AWS Lambda (Node.js)**: Serverless compute executing catalogue queries and business logic.
-- **Amazon DynamoDB (`MorrowVideos`)**: NoSQL database holding metadata, seasons, and episodes.
+- **Amazon DynamoDB (`MorrowVideos`)**: Serverless NoSQL database storing catalogue records, seasons, and episodes.
 - **Amazon CloudWatch**: End-to-end diagnostics, structured logs, and metrics.
 - **Morrow AI Concierge**: Catalogue-grounded AI discovery assistant.
 
 ---
 
-## 2. Phase 2 & 3 Milestones
+## 2. Project Milestones & Implementation History
 
 ### Phase 2: Catalogue & Data Design
 1. **Frontend Audit**: Inspected existing routes, HTML5 video player, `localStorage` watch history, and media paths.
@@ -36,6 +37,7 @@
 4. **Catalogue Normalizer & Adapter**: Backward-compatible layer (`data/catalogue-adapter.js`) preserving all legacy UI properties (`videoId`, `category`, `episodes`) while enforcing the canonical schema.
 5. **Asset Manifest Generator**: Automated scanner (`scripts/generate-asset-manifest.mjs`) tracking 29 media assets (24 verified local, 5 planned remote).
 6. **Automated Integrity Validator**: 16-point validator (`scripts/validate-catalogue.mjs`) ensuring zero duplicate IDs, valid durations, non-empty genres, and intact relationships.
+
 ### Phase 3: Amazon S3 Asset Preparation & Secure Storage
 1. **S3 Object Key Convention**: Established strict prefix convention (`posters/`, `backdrops/`, `videos/`, `subtitles/`).
 2. **Asset Manifest Mapping**: Deterministic mapping from local catalogue paths (`media/videos/...`, `media/thumbnails/...`) to S3 keys.
@@ -48,11 +50,22 @@
 1. **Serverless Lambda Service**: Developed lightweight Node.js ES Module Lambda service in `backend/` (`index.handler`).
 2. **Standard REST Endpoints**: Implemented `GET /api/health`, `GET /api/videos` (with `type`, `genre`, and `limit` filtering), `GET /api/videos/{id}`, and `GET /api/series/{id}/episodes`.
 3. **Phase 4 Development Fixture Repository**: Concrete repository adapter backed by the Phase 2 canonical dataset (`DATA_SOURCE=fixture`).
-4. **Phase 5 DynamoDB Boundary Guard**: System strictly enforces explicit configuration; attempting to use an unconfigured source (`DATA_SOURCE=dynamodb`) safely returns HTTP 503 instead of silently falling back to fixture data.
+4. **Defensive Isolation Guard**: Strict data source verification ensuring unconfigured sources fail safely with HTTP 503 instead of silent fallback.
 5. **Input Validation & Security**: Rigorous validation on query and path parameters to prevent injection or unbounded scans.
-6. **Automated Test Suite**: 67 automated unit and simulated API Gateway v2 integration tests (100 total project tests passing).
-7. **Repeatable Packaging Pipeline**: `npm run backend:package` generates isolated deployment artifact (`dist/morrow-backend-lambda.zip`, ~15.6 KB).
-8. **AWS Console Deployment Guide**: Complete, beginner-friendly runbook in [`docs/backend-api-architecture.md`](docs/backend-api-architecture.md).
+6. **Automated Test Suite**: 67 automated unit and simulated API Gateway v2 integration tests.
+7. **Repeatable Packaging Pipeline**: `npm run backend:package` generates isolated deployment artifact (`dist/morrow-backend-lambda.zip`, ~18.75 KB).
+8. **AWS Deployment Guide**: Comprehensive runbook in [`docs/backend-api-architecture.md`](docs/backend-api-architecture.md).
+
+### Phase 5: Amazon DynamoDB Catalogue Integration
+1. **Access Pattern Audit**: Evaluated query patterns for point lookups (`/api/videos/{id}`), filtered listings (`/api/videos`), and series episodes (`/api/series/{id}/episodes`).
+2. **Justified Table Design**: Selected simple primary key schema with partition key `id` (String) and on-demand capacity (`PAY_PER_REQUEST`) on table `MorrowVideos`. Avoided speculative GSIs to minimize AWS costs.
+3. **Atomic Series & Episode Storage**: Embedded canonical `seasons` and `episodes` arrays directly inside series documents, enabling single-read (1 RRU) deterministic episode retrieval.
+4. **Production Repository Layer**: Implemented `DynamoDbCatalogueRepository` (`backend/src/repository/dynamoDbRepository.mjs`) using AWS SDK v3 `DynamoDBDocumentClient`.
+5. **Zero Silent Fallback**: Verified that missing tables, IAM permission denials, or throttling strictly return HTTP 503 `DatabaseError` without exposing credentials or falling back to mock fixtures.
+6. **Catalogue Migration & Import Tooling**: Created repeatable script (`scripts/import-catalogue-dynamodb.mjs`) supporting default `--dry-run` inspection and live `--execute` batch writing.
+7. **Least-Privilege IAM Policy**: Formulated strict read-only execution policy (`dynamodb:GetItem`, `dynamodb:Scan`, `dynamodb:DescribeTable`) scoped solely to `MorrowVideos`.
+8. **142 Automated Tests**: Comprehensive test coverage across catalogue rules, API endpoints, and mock DocumentClient operations with zero failures.
+9. **Authoritative Architecture Guide**: Complete operational runbook in [`docs/dynamodb-catalogue-architecture.md`](docs/dynamodb-catalogue-architecture.md).
 
 ---
 
@@ -88,18 +101,26 @@ morrow-ott/
 │   └── src/
 │       ├── handler.mjs             # API Gateway HTTP API v2 event router & logger
 │       ├── routes/                 # Controllers (/api/health, /api/videos, /api/series)
-│       ├── repository/             # Repository boundary (fixture adapter & Phase 5 guard)
-│       └── utils/                  # HTTP response formatters & input validators
+│       ├── repository/             # Repository boundary (DynamoDB & fixture adapters)
+│       │   ├── baseRepository.mjs     # Abstract ICatalogueRepository interface
+│       │   ├── catalogueRepository.mjs# Environment-driven factory (fixture / dynamodb)
+│       │   ├── dynamoDbRepository.mjs # AWS SDK v3 DocumentClient production repository
+│       │   └── fixtureRepository.mjs  # Local development fixture repository
+│       └── utils/                  # Normalizer, response formatters & input validators
+│           ├── normalizer.mjs         # Truth-in-availability & UI backward compatibility
+│           ├── response.mjs           # HTTP response formatters & error shielding
+│           └── validator.mjs          # Query & path parameter validation
 ├── data/
 │   ├── catalogue.json              # Canonical catalogue dataset (7 titles)
 │   ├── catalogue-adapter.js        # Normalizer & S3 key mapping adapter
 │   └── asset-manifest.json         # Automated asset manifest with S3 metadata (29 entries)
 ├── dist/
-│   └── morrow-backend-lambda.zip   # Generated AWS Lambda deployment package (~15.6 KB)
+│   └── morrow-backend-lambda.zip   # Generated AWS Lambda deployment package (~18.75 KB)
 ├── docs/
-│   ├── catalogue-data-design.md    # Phase 2 canonical data model & DynamoDB spec
+│   ├── catalogue-data-design.md    # Phase 2 canonical data model & schema spec
 │   ├── s3-asset-architecture.md    # Phase 3 S3 asset architecture & AWS Console runbook
-│   └── backend-api-architecture.md # Phase 4 Lambda API architecture & AWS deployment guide
+│   ├── backend-api-architecture.md # Phase 4 Lambda API architecture & AWS deployment guide
+│   └── dynamodb-catalogue-architecture.md # Phase 5 DynamoDB architecture & migration guide
 ├── frontend/
 │   ├── index.html                  # Cinema-first single-page app (SPA)
 │   ├── styles.css                  # Custom styling (brand colors, layout, player)
@@ -114,7 +135,9 @@ morrow-ott/
 │   ├── s3-upload-plan.mjs          # Phase 3 S3 dry-run planner & AWS CLI commands
 │   ├── validate-catalogue.mjs      # 16-rule automated catalogue validator
 │   ├── test-catalogue.mjs          # 33-test catalogue integrity suite
-│   ├── test-backend-api.mjs        # 67-test backend API & Lambda proxy test suite
+│   ├── test-backend-api.mjs        # 69-test backend Lambda API & isolation suite
+│   ├── test-dynamodb-repository.mjs# 40-test DynamoDB mock repository suite
+│   ├── import-catalogue-dynamodb.mjs# Phase 5 DynamoDB catalogue migration & import tool
 │   ├── package-lambda.mjs          # AWS Lambda deployment packager
 │   └── build.mjs                   # Verification build pipeline
 ├── .gitignore                      # Git ignore file (ignores large videos & AWS creds)
@@ -135,56 +158,63 @@ npm start
 ```
 Starts the local development server at **`http://localhost:3000`** with integrated Lambda backend routing (`/api/*`).
 
-### 2. Run the Complete Test Suite (100 Tests)
+### 2. Run the Complete Test Suite (142 Tests)
 ```bash
 npm test
 ```
-Executes both test suites:
+Executes all three test suites:
 - 33 catalogue & manifest tests (`test-catalogue.mjs`)
-- 67 backend Lambda API tests (`test-backend-api.mjs`)
+- 69 backend Lambda API & defensive isolation tests (`test-backend-api.mjs`)
+- 40 DynamoDB DocumentClient repository tests (`test-dynamodb-repository.mjs`)
 
-### 3. Run Backend API Tests Only
+### 3. Run DynamoDB Repository Tests Only
 ```bash
-npm run backend:test
+npm run dynamodb:test
 ```
-Runs 67 automated tests against simulated API Gateway HTTP API v2 events.
+Runs 40 automated tests verifying `GetItem`, `Scan`, filters, series episode ordering, and AWS SDK exception shielding.
 
-### 4. Package AWS Lambda Deployment Artifact
+### 4. Run Catalogue Import Dry-Run
+```bash
+npm run dynamodb:import
+```
+Validates the canonical catalogue and previews the 7 DynamoDB items to be written without modifying cloud resources.
+
+### 5. Package AWS Lambda Deployment Artifact
 ```bash
 npm run backend:package
 ```
-Generates and inspects `dist/morrow-backend-lambda.zip` (~15.6 KB) ready for AWS Lambda upload.
+Generates and inspects `dist/morrow-backend-lambda.zip` (~18.75 KB) ready for AWS Lambda upload.
 
-### 5. Run Verification Build
+### 6. Run Verification Build
 ```bash
 npm run build
 ```
-Executes the full pipeline: catalogue validation, manifest generation, static frontend check, S3 upload verification, and Lambda packaging.
+Executes the full pipeline: catalogue validation, manifest generation, static frontend check, S3 upload verification, Lambda packaging, and DynamoDB import readiness.
 
 ---
 
-## 6. Target DynamoDB Schema (`MorrowVideos`)
+## 6. Finalized DynamoDB Schema (`MorrowVideos`)
 
-For Phase 5 AWS deployment, the canonical schema maps to a single-table DynamoDB design:
+For the Phase 5 AWS deployment, the canonical schema maps to a simple, cost-effective primary key design:
 
-- **Partition Key (PK)**: `TITLE#<id>` (Movies) or `SERIES#<id>` (Series)
-- **Sort Key (SK)**: `METADATA` or `SEASON#<num>#EP#<num>`
-- **GSI-1 (Content Type & Rating)**: `GSI1PK = TYPE#<movie|series>`, `GSI1SK = RATING#<imdbRating>`
-- **GSI-2 (Genre Discovery)**: `GSI2PK = GENRE#<genre>`, `GSI2SK = YEAR#<releaseYear>`
+- **Table Name**: `MorrowVideos`
+- **Partition Key (PK)**: `id` (String) — e.g. `VID001` through `VID007`
+- **Sort Key**: *None*
+- **Capacity Mode**: `PAY_PER_REQUEST` (On-Demand)
+- **Secondary Indexes**: *None* (Controlled scan across 7 items consumes exactly 1 RRU)
+- **Embedded Document Design**: Series records store full `seasons` and `episodes` arrays directly in the item, allowing deterministic single-query episode resolution without multi-table joins.
 
 ---
 
-## 7. Next Steps: Phase 5 (DynamoDB) & Phase 6 (CloudFront)
+## 7. Next Step: Phase 6 (Amazon CloudFront & Full Integration)
 
-1. **Phase 5 (Amazon DynamoDB)**:
-   - Provision DynamoDB table `MorrowVideos`.
-   - Implement `DynamoDbCatalogueRepository` in `backend/src/repository/` to replace the Phase 4 fixture adapter (`DATA_SOURCE=dynamodb`).
-   - Grant Lambda execution role `dynamodb:GetItem`, `dynamodb:Query`, and `dynamodb:Scan` permissions.
-2. **Phase 6 (Amazon CloudFront & Full Integration)**:
-   - Route `/api/*` through CloudFront distribution to Amazon API Gateway.
-   - Serve frontend static files from S3 origin via CloudFront OAC.
-   - Unify origin to eliminate cross-origin complexity.
-   - Connect live frontend to production CloudFront endpoint.
+1. **Amazon CloudFront Distribution**:
+   - Establish CloudFront distribution as the main public entry point for the Morrow OTT platform.
+   - Configure Origin Access Control (OAC) to securely serve private S3 media assets and frontend SPA files.
+2. **Unified API Gateway Origin**:
+   - Route `/api/*` requests through CloudFront to Amazon API Gateway (`MorrowHttpApi`), eliminating CORS overhead.
+3. **End-to-End Playback**:
+   - Stream cloud video assets seamlessly from CloudFront CDN using metadata retrieved dynamically from Amazon DynamoDB.
 
 ---
 

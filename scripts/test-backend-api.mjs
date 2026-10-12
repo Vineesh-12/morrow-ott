@@ -316,24 +316,35 @@ async function runTests() {
   }
 
   // ----------------------------------------------------------------------------
-  // Suite 7: Phase 5 Boundary Guard (Negative Data Source Test)
+  // Suite 7: Phase 5 Data Source Isolation & Zero Silent Fallback
   // ----------------------------------------------------------------------------
-  console.log('\nSuite 7: Phase 5 Boundary Guard (DATA_SOURCE Isolation)');
+  console.log('\nSuite 7: Phase 5 Data Source Isolation & Zero Silent Fallback');
   {
+    // Test unsupported data source
+    process.env.DATA_SOURCE = 'unknown_source';
+    resetRepositoryInstance();
+
+    const badSourceEvent = createHttpApiV2Event({ method: 'GET', rawPath: '/api/videos' });
+    const badSourceRes = await handler(badSourceEvent);
+    assert(badSourceRes.statusCode === 503, 'Requesting unsupported DATA_SOURCE fails with HTTP 503 Service Unavailable');
+    const badSourceBody = JSON.parse(badSourceRes.body);
+    assert(badSourceBody.error.code === 'DATA_SOURCE_UNAVAILABLE', 'Error code is DATA_SOURCE_UNAVAILABLE');
+
+    // Test DynamoDB mode without local database credentials (asserts NO silent fallback to fixture)
     process.env.DATA_SOURCE = 'dynamodb';
     resetRepositoryInstance();
 
     const ddbEvent = createHttpApiV2Event({ method: 'GET', rawPath: '/api/videos' });
     const ddbRes = await handler(ddbEvent);
-    assert(ddbRes.statusCode === 503, 'Requesting DATA_SOURCE=dynamodb in Phase 4 fails with HTTP 503 Service Unavailable');
+    assert(ddbRes.statusCode === 503, 'Unconfigured/unreachable DynamoDB fails safely with HTTP 503');
     const ddbBody = JSON.parse(ddbRes.body);
-    assert(ddbBody.error.code === 'DATA_SOURCE_UNAVAILABLE', 'Error code is DATA_SOURCE_UNAVAILABLE');
+    assert(ddbBody.success === false, 'Fails with success: false (does NOT return fixture data)');
     assert(
-      ddbBody.error.message.includes('Phase 5'),
-      'Safe diagnostic informs client that DynamoDB is reserved for Phase 5'
+      ddbBody.error.code === 'TABLE_NOT_FOUND' || ddbBody.error.code === 'DATABASE_ACCESS_DENIED' || ddbBody.error.code === 'DATABASE_UNAVAILABLE',
+      `Error code indicates database failure (${ddbBody.error.code}) and never silent fixture fallback`
     );
 
-    // Reset back to fixture
+    // Reset back to fixture for local dev safety
     process.env.DATA_SOURCE = 'fixture';
     resetRepositoryInstance();
   }

@@ -160,6 +160,12 @@ export async function apiHandler(event = {}, context = {}) {
       return response;
     }
 
+    if (err.name === 'DatabaseError' || err.code === 'TABLE_NOT_FOUND' || err.code === 'DATABASE_ACCESS_DENIED') {
+      response = createErrorResponse(err.code || 'DATABASE_UNAVAILABLE', err.message, err.statusCode || 503);
+      logResponse(method, path, response.statusCode, startTime, requestId, err.message);
+      return response;
+    }
+
     // Uncaught Internal Error — Do NOT leak stack trace or internal filesystem paths to client
     console.error(JSON.stringify({
       level: 'ERROR',

@@ -9,9 +9,11 @@
     "validate": "node scripts/validate-catalogue.mjs",
     "manifest": "node scripts/generate-asset-manifest.mjs",
     "s3:plan": "node scripts/s3-upload-plan.mjs",
-    "test": "node scripts/test-catalogue.mjs && node scripts/test-backend-api.mjs",
+    "test": "node scripts/test-catalogue.mjs && node scripts/test-backend-api.mjs && node scripts/test-dynamodb-repository.mjs",
     "backend:test": "node scripts/test-backend-api.mjs",
     "backend:package": "node scripts/package-lambda.mjs",
+    "dynamodb:test": "node scripts/test-dynamodb-repository.mjs",
+    "dynamodb:import": "node scripts/import-catalogue-dynamodb.mjs",
     "build": "node scripts/build.mjs"
   },
   "keywords": [
@@ -25,5 +27,9 @@
     "dynamodb"
   ],
   "author": "Morrow Engineering",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1149.0",
+    "@aws-sdk/lib-dynamodb": "^3.1149.0"
+  }
 }

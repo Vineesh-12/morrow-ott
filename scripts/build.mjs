@@ -65,6 +65,12 @@ try {
   const lambdaPkg = packageLambda();
   console.log(`   ✓ Lambda deployment package verified (${lambdaPkg.sizeKb} KB, ${lambdaPkg.fileCount} files, SHA-256: ${lambdaPkg.sha256.substring(0, 16)}...).`);
 
+  // Step 6: Verify DynamoDB Catalogue Migration Readiness (Phase 5)
+  console.log('\n6. Verifying DynamoDB Catalogue Migration Readiness (Phase 5)...');
+  const { prepareDynamoDbItems } = await import('./import-catalogue-dynamodb.mjs');
+  const ddbItems = prepareDynamoDbItems();
+  console.log(`   ✓ DynamoDB item preparation verified (${ddbItems.length} candidate items with valid partition keys, 0 errors).`);
+
   console.log('\n======================================================');
   console.log('  Morrow OTT — Verification Build Completed Successfully');
   console.log('======================================================');

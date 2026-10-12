@@ -3,11 +3,13 @@
  * Defines the abstract catalogue data access interface and provides
  * factory resolution based on the explicit DATA_SOURCE configuration.
  *
- * Phase 4 uses FixtureCatalogueRepository (DATA_SOURCE=fixture).
- * Phase 5 will introduce DynamoDbCatalogueRepository without modifying route logic.
+ * Supported DATA_SOURCE values:
+ * - 'fixture': Phase 4 development fixture repository (backed by local JSON)
+ * - 'dynamodb': Phase 5 production repository (backed by Amazon DynamoDB 'MorrowVideos')
  */
 
 import { FixtureCatalogueRepository } from './fixtureRepository.mjs';
+import { DynamoDbCatalogueRepository } from './dynamoDbRepository.mjs';
 import { BaseCatalogueRepository, DataSourceUnavailableError } from './baseRepository.mjs';
 
 export { BaseCatalogueRepository, DataSourceUnavailableError };
@@ -33,17 +35,15 @@ export function getCatalogueRepository(overrideSource) {
   }
 
   if (dataSource === 'dynamodb') {
-    // Explicit Phase 5 Boundary Guard: Fail loudly and safely.
-    // Do not silently fall back to fixture data.
-    throw new DataSourceUnavailableError(
-      'DynamoDB data source is planned for Phase 5 and is not yet configured. ' +
-      'Set DATA_SOURCE=fixture for the Phase 4 development adapter.'
-    );
+    if (!repositoryInstance || overrideSource) {
+      repositoryInstance = new DynamoDbCatalogueRepository();
+    }
+    return repositoryInstance;
   }
 
   // Any other unsupported data source
   throw new DataSourceUnavailableError(
-    `Unsupported or unconfigured DATA_SOURCE: '${dataSource}'. Valid Phase 4 option is 'fixture'.`
+    `Unsupported or unconfigured DATA_SOURCE: '${dataSource}'. Valid options are 'fixture' and 'dynamodb'.`
   );
 }
 
