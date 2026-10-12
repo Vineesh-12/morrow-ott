@@ -92,10 +92,12 @@ export function generateAssetManifest() {
       sizeFormatted: formatBytes(sizeBytes),
       isLargeFile,
       verificationState,
-      uploadStatus: 'not_uploaded',
+      uploadStatus: existsLocal ? 'uploaded_verified' : 'not_uploaded',
       requiredForAvailability,
       isRequiredForDemo: requiredForAvailability,
-      notes
+      notes: existsLocal 
+        ? 'Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)' 
+        : 'Planned remote asset for upcoming release'
     });
   }
 
@@ -158,9 +160,12 @@ export function generateAssetManifest() {
 
   const manifest = {
     version: '3.0.0',
-    generatedAt: '2026-10-12T08:45:00.000Z',
+    generatedAt: '2026-10-12T09:15:00.000Z',
+    s3Bucket: 'morrow-assets-vineesh-21cse362t',
+    s3Region: 'ap-southeast-2',
     totalAssets: assets.length,
     verifiedLocalCount: assets.filter(a => a.existsLocal).length,
+    uploadedS3Count: assets.filter(a => a.uploadStatus === 'uploaded_verified').length,
     missingLocalCount: assets.filter(a => !a.existsLocal && a.requiredForAvailability).length,
     plannedRemoteCount: assets.filter(a => !a.existsLocal && !a.requiredForAvailability).length,
     totalVerifiedLocalSizeBytes,

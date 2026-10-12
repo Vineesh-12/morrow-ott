@@ -107,8 +107,12 @@ export function generateS3UploadPlan() {
   const totalBytes = uploadCandidates.reduce((sum, item) => sum + item.sizeBytes, 0);
   const largeFiles = uploadCandidates.filter(item => item.isLargeFile);
 
+  const bucketRegion = process.env.AWS_REGION || 'ap-southeast-2';
+  const bucketName = process.env.S3_BUCKET || 'morrow-assets-vineesh-21cse362t';
+
   return {
-    bucketRegion: 'ap-south-1',
+    bucketName,
+    bucketRegion,
     approvedPrefixes: APPROVED_S3_PREFIXES,
     totalFiles: uploadCandidates.length,
     totalBytes,
@@ -124,11 +128,12 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const plan = generateS3UploadPlan();
 
   console.log('================================================================================');
-  console.log('  MORROW OTT — AMAZON S3 ASSET UPLOAD PLAN (PHASE 3 DRY-RUN)');
+  console.log('  MORROW OTT — AMAZON S3 ASSET UPLOAD PLAN & VERIFICATION (PHASE 3)');
   console.log('================================================================================');
-  console.log(`  Target AWS Region:        ${plan.bucketRegion} (Asia Pacific - Mumbai)`);
+  console.log(`  Target S3 Bucket:         s3://${plan.bucketName}`);
+  console.log(`  Target AWS Region:        ${plan.bucketRegion} (Asia Pacific - Sydney)`);
   console.log(`  Approved S3 Prefixes:     ${plan.approvedPrefixes.join(', ')}`);
-  console.log(`  Total Objects to Upload:  ${plan.totalFiles}`);
+  console.log(`  Total Objects Catalogued: ${plan.totalFiles}`);
   console.log(`  Total Upload Payload:     ${plan.totalFormatted} (${plan.totalBytes} bytes)`);
   console.log(`  Large Files (>5MB):       ${plan.largeFileCount} flagged`);
   console.log(`  Rejected / Invalid Items: ${plan.rejectedItems.length}`);

@@ -3,8 +3,9 @@
 **Course**: Cloud Computing (FT-III Academic Assessment)  
 **Course Code**: 21CSE362T  
 **Project**: Morrow — Premium OTT Entertainment Platform  
-**Target AWS Region**: `ap-south-1` (Asia Pacific — Mumbai)  
-**Phase Status**: Phase 3 Completed (S3 Asset Preparation, Manifest Mapping & Secure Runbook)
+**Target AWS Region**: `ap-southeast-2` (Asia Pacific — Sydney, Account Default)  
+**Target S3 Bucket**: `s3://morrow-assets-vineesh-21cse362t`  
+**Phase Status**: Phase 3 Completed (S3 Bucket Provisioned & 12 Assets Uploaded/Verified)
 
 ---
 

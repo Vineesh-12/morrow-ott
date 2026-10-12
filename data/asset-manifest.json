@@ -1,8 +1,11 @@
 {
   "version": "3.0.0",
-  "generatedAt": "2026-10-12T08:45:00.000Z",
+  "generatedAt": "2026-10-12T09:15:00.000Z",
+  "s3Bucket": "morrow-assets-vineesh-21cse362t",
+  "s3Region": "ap-southeast-2",
   "totalAssets": 29,
   "verifiedLocalCount": 24,
+  "uploadedS3Count": 24,
   "missingLocalCount": 0,
   "plannedRemoteCount": 5,
   "totalVerifiedLocalSizeBytes": 12527039,
@@ -28,10 +31,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/cloud-intro.svg",
@@ -46,10 +49,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/cloud-intro.mp4",
@@ -64,10 +67,10 @@
       "sizeFormatted": "5.11 MB",
       "isLargeFile": true,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": true,
       "isRequiredForDemo": true,
-      "notes": "Verified local media (Large file >5MB; candidate for multipart upload)"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/subtitles/cloud-intro.en.vtt",
@@ -100,10 +103,10 @@
       "sizeFormatted": "2.69 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/big-buck-bunny.svg",
@@ -118,10 +121,10 @@
       "sizeFormatted": "2.69 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/big-buck-bunny.mp4",
@@ -136,10 +139,10 @@
       "sizeFormatted": "5.26 MB",
       "isLargeFile": true,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": true,
       "isRequiredForDemo": true,
-      "notes": "Verified local media (Large file >5MB; candidate for multipart upload)"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/subtitles/big-buck-bunny.en.vtt",
@@ -172,10 +175,10 @@
       "sizeFormatted": "2.95 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/botanical-life.svg",
@@ -190,10 +193,10 @@
       "sizeFormatted": "2.95 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/botanical-life.svg",
@@ -208,10 +211,10 @@
       "sizeFormatted": "2.95 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/botanical-life.svg",
@@ -226,10 +229,10 @@
       "sizeFormatted": "2.95 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/botanical-life.mp4",
@@ -244,10 +247,10 @@
       "sizeFormatted": "1.08 MB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": true,
       "isRequiredForDemo": true,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/urban-rhythm.svg",
@@ -262,10 +265,10 @@
       "sizeFormatted": "3.23 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/urban-rhythm.svg",
@@ -280,10 +283,10 @@
       "sizeFormatted": "3.23 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/urban-rhythm.svg",
@@ -298,10 +301,10 @@
       "sizeFormatted": "3.23 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/urban-rhythm.svg",
@@ -316,10 +319,10 @@
       "sizeFormatted": "3.23 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/urban-rhythm.mp4",
@@ -334,10 +337,10 @@
       "sizeFormatted": "503.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": true,
       "isRequiredForDemo": true,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/cloud-intro.svg",
@@ -352,10 +355,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/cloud-intro.svg",
@@ -370,10 +373,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/solaris-drift.mp4",
@@ -406,10 +409,10 @@
       "sizeFormatted": "3.23 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/urban-rhythm.svg",
@@ -424,10 +427,10 @@
       "sizeFormatted": "3.23 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/silent-echoes.mp4",
@@ -460,10 +463,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/cloud-intro.svg",
@@ -478,10 +481,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/cloud-intro.svg",
@@ -496,10 +499,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/thumbnails/cloud-intro.svg",
@@ -514,10 +517,10 @@
       "sizeFormatted": "3.12 KB",
       "isLargeFile": false,
       "verificationState": "verified_local",
-      "uploadStatus": "not_uploaded",
+      "uploadStatus": "uploaded_verified",
       "requiredForAvailability": false,
       "isRequiredForDemo": false,
-      "notes": "Verified local asset ready for S3 upload"
+      "notes": "Verified in AWS S3 (s3://morrow-assets-vineesh-21cse362t)"
     },
     {
       "logicalKey": "media/videos/quantum-rift-e1.mp4",

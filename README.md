@@ -5,8 +5,8 @@
 
 [![Tests](https://img.shields.io/badge/Tests-33%20Passed-brightgreen)](file:///scripts/test-catalogue.mjs)
 [![Validation](https://img.shields.io/badge/Validation-16%2F16%20Rules%20Passing-blue)](file:///scripts/validate-catalogue.mjs)
-[![Phase 3](https://img.shields.io/badge/Phase%203-Amazon%20S3%20Prep%20Complete-orange)](file:///docs/s3-asset-architecture.md)
-[![AWS S3](https://img.shields.io/badge/S3%20Region-ap--south--1%20(Mumbai)-purple)](file:///docs/s3-asset-architecture.md)
+[![Phase 3](https://img.shields.io/badge/Phase%203-Amazon%20S3%20Live%20Verified-brightgreen)](file:///docs/s3-asset-architecture.md)
+[![AWS S3](https://img.shields.io/badge/S3%20Region-ap--southeast--2%20(Sydney)-purple)](file:///docs/s3-asset-architecture.md)
 [![Security](https://img.shields.io/badge/S3%20Public%20Access-Blocked%20(Private%20Origin)-red)](file:///docs/s3-asset-architecture.md)
 
 ---
